@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ניתוח תחזיות – מונדיאל 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f1923;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #c8d8e8;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .page-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .page-header .subtitle {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #4a9eff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .trophy { font-size: 40px; display: block; margin-bottom: 12px; }
+
+  /* Summary cards */
+  .summary-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .summary-card {
+    background: #1a2632;
+    border-radius: 14px;
+    padding: 20px 28px;
+    text-align: center;
+    min-width: 160px;
+    border: 1px solid #263a50;
+  }
+  .summary-card .s-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #4a9eff;
+  }
+  .summary-card .s-label {
+    font-size: 12px;
+    color: #8a9bb0;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Section */
+  .section {
+    max-width: 860px;
+    margin: 0 auto 40px;
+    background: #1a2632;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    border: 1px solid #263a50;
+  }
+  .section-header {
+    background: linear-gradient(135deg, #1e3a5f, #0d2137);
+    padding: 20px 28px;
+    border-bottom: 1px solid #263a50;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .section-header .icon { font-size: 22px; }
+  .section-body { padding: 24px 28px; }
+
+  /* Chart container */
+  .chart-wrap {
+    position: relative;
+    height: 260px;
+    margin-bottom: 24px;
+  }
+  .chart-wrap.tall { height: 340px; }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    text-align: right;
+    color: #4a9eff;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0 0 10px;
+    border-bottom: 1px solid #263a50;
+  }
+  td {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(38,58,80,0.5);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  .team-cell {
+    font-weight: 700;
+    color: #fff;
+    width: 120px;
+  }
+  .count-cell {
+    color: #4a9eff;
+    font-weight: 700;
+    font-size: 16px;
+    width: 80px;
+  }
+  .names-cell {
+    color: #8a9bb0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* AI tag */
+  .ai-tag {
+    display: inline-block;
+    background: rgba(74,158,255,0.2);
+    color: #4a9eff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* AI cards grid */
+  .ai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .ai-card {
+    background: #0f1923;
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid #263a50;
+  }
+  .ai-engine-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #4a9eff;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .ai-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+  .ai-label {
+    font-size: 11px;
+    color: #8a9bb0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .ai-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-align: left;
+  }
+  .ai-final .ai-value {
+    font-size: 12px;
+    color: #c8d8e8;
+  }
+
+  /* Contrarians */
+  .contrarian-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(38,58,80,0.5);
+  }
+  .contrarian-item:last-child { border-bottom: none; }
+  .contrarian-name {
+    font-weight: 700;
+    color: #fff;
+    min-width: 80px;
+  }
+  .contrarian-arrow { color: #4a9eff; font-size: 16px; }
+  .contrarian-team {
+    font-weight: 700;
+    color: #f5a623;
+    flex: 1;
+  }
+  .contrarian-badge {
+    background: rgba(245,166,35,0.15);
+    color: #f5a623;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .no-data { color: #8a9bb0; font-style: italic; font-size: 14px; }
+
+  .divider {
+    height: 1px;
+    background: #263a50;
+    margin: 24px 0;
+  }
+
+  .subsection-title {
+    font-size: 13px;
+    color: #4a9eff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="trophy">🏆</span>
+  <h1>ניתוח תחזיות – מונדיאל 2026</h1>
+  <div class="subtitle">World Cup 2026 · Prediction Analysis</div>
+</div>
+
+<!-- Summary Row -->
+<div class="summary-row">
+  <div class="summary-card">
+    <div class="s-value">23</div>
+    <div class="s-label">משתתפים שהגישו</div>
+  </div>
+  <div class="summary-card">
+    <div class="s-value">צרפת</div>
+    <div class="s-label">מועמד מוביל לאלוף</div>
+  </div>
+  <div class="summary-card">
+    <div class="s-value">אמבפה</div>
+    <div class="s-label">מלך שערים פופולרי</div>
+  </div>
+  <div class="summary-card">
+    <div class="s-value">10</div>
+    <div class="s-label">הצביעו לאלוף המוביל</div>
+  </div>
+</div>
+
+<!-- SECTION 1: Champion -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🏅</span>
+    <h2>מי יהיה האלוף?</h2>
+  </div>
+  <div class="section-body">
+    <div class="chart-wrap">
+      <canvas id="champChart"></canvas>
+    </div>
+    <table>
+      <thead><tr>
+        <th>קבוצה</th><th>הצבעות</th><th>מי בחר</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="team-cell">צרפת</td>
+          <td class="count-cell">10 </td>
+          <td class="names-cell">גיא, אלעד, שלו, קדמי, אמיתי, אברגל, אוחיון, יונתן, איתמר, המתחכם</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ספרד</td>
+          <td class="count-cell">10 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">יואב, ליעד, אביבה, עוזיה, אריה, בןמשה, אביתר, 🤖 Gemini, 🤖 Claude, 🤖 ChatGPT</td>
+        </tr>
+        <tr>
+          <td class="team-cell">פורטוגל</td>
+          <td class="count-cell">3 </td>
+          <td class="names-cell">ליחי, אילן, ניסן</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ברזיל</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">יוסי</td>
+        </tr>
+        <tr>
+          <td class="team-cell">גרמניה</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">יאיר</td>
+        </tr>
+        <tr>
+          <td class="team-cell">בלגיה</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">הקוף</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ארגנטינה</td>
+          <td class="count-cell">1 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">🤖 Grok</td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 2: Top Scorer -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">⚽</span>
+    <h2>מלך השערים</h2>
+  </div>
+  <div class="section-body">
+    <div class="chart-wrap">
+      <canvas id="scorerChart"></canvas>
+    </div>
+    <table>
+      <thead><tr>
+        <th>שחקן</th><th>הצבעות</th><th>מי בחר</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="team-cell">אמבפה</td>
+          <td class="count-cell">14 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">גיא, ליעד, אלעד, אביבה, עוזיה, שלו, אמיתי, יוסי, אברגל, יונתן, אביתר, 🤖 Claude, 🤖 Grok, 🤖 ChatGPT</td>
+        </tr>
+        <tr>
+          <td class="team-cell">הארי קיין</td>
+          <td class="count-cell">6 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">בןמשה, ליחי, אילן, ניסן, איתמר, 🤖 Gemini</td>
+        </tr>
+        <tr>
+          <td class="team-cell">אויארסבל</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">יואב</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ניקו וויליאם</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">אריה</td>
+        </tr>
+        <tr>
+          <td class="team-cell">דמבלה</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">קדמי</td>
+        </tr>
+        <tr>
+          <td class="team-cell">פראן טורס</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">אוחיון</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ויניסיוס ג׳וניור</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">יאיר</td>
+        </tr>
+        <tr>
+          <td class="team-cell">פדריקו דימרקו</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">הקוף</td>
+        </tr>
+        <tr>
+          <td class="team-cell">אודי כבודי</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">המתחכם</td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 3: Final Matchup -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🥇</span>
+    <h2>גמר חלומות – מי נגד מי?</h2>
+  </div>
+  <div class="section-body">
+    <div class="chart-wrap tall">
+      <canvas id="finalChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: Semi-finalists -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🔴</span>
+    <h2>הקבוצות הצפויות לחצי גמר</h2>
+  </div>
+  <div class="section-body">
+    <div class="chart-wrap tall">
+      <canvas id="semiChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: AI Spotlight -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🤖</span>
+    <h2>מנועי ה-AI – מה הם חושבים?</h2>
+  </div>
+  <div class="section-body">
+    <div class="ai-grid">
+      
+        <div class="ai-card">
+          <div class="ai-engine-name">Gemini</div>
+          <div class="ai-stat"><span class="ai-label">אלוף</span><span class="ai-value">ספרד</span></div>
+          <div class="ai-stat"><span class="ai-label">מלך שערים</span><span class="ai-value">הארי קיין</span></div>
+          <div class="ai-stat ai-final"><span class="ai-label">גמר</span><span class="ai-value">ספרד 1-1 אנגליה</span></div>
+        </div>
+        <div class="ai-card">
+          <div class="ai-engine-name">Claude</div>
+          <div class="ai-stat"><span class="ai-label">אלוף</span><span class="ai-value">ספרד</span></div>
+          <div class="ai-stat"><span class="ai-label">מלך שערים</span><span class="ai-value">אמבפה</span></div>
+          <div class="ai-stat ai-final"><span class="ai-label">גמר</span><span class="ai-value">ספרד 1-1 ארגנטינה</span></div>
+        </div>
+        <div class="ai-card">
+          <div class="ai-engine-name">Grok</div>
+          <div class="ai-stat"><span class="ai-label">אלוף</span><span class="ai-value">ארגנטינה</span></div>
+          <div class="ai-stat"><span class="ai-label">מלך שערים</span><span class="ai-value">אמבפה</span></div>
+          <div class="ai-stat ai-final"><span class="ai-label">גמר</span><span class="ai-value">ספרד 1-1 ארגנטינה</span></div>
+        </div>
+        <div class="ai-card">
+          <div class="ai-engine-name">ChatGPT</div>
+          <div class="ai-stat"><span class="ai-label">אלוף</span><span class="ai-value">ספרד</span></div>
+          <div class="ai-stat"><span class="ai-label">מלך שערים</span><span class="ai-value">אמבפה</span></div>
+          <div class="ai-stat ai-final"><span class="ai-label">גמר</span><span class="ai-value">ספרד 1-2 אנגליה</span></div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: Contrarians -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🦄</span>
+    <h2>הקונטרריאנים – מי הלך נגד הזרם?</h2>
+  </div>
+  <div class="section-body">
+    <div class="subsection-title">בחירות אלוף נדירות</div>
+    
+          <div class="contrarian-item">
+            <span class="contrarian-name">יוסי</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">ברזיל</span>
+            <span class="contrarian-badge">בלעדי!</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">יאיר</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">גרמניה</span>
+            <span class="contrarian-badge">בלעדי!</span>
+          </div>
+
+    <div class="divider"></div>
+
+    <div class="subsection-title">בחירות מלך שערים ייחודיות</div>
+    
+          <div class="contrarian-item">
+            <span class="contrarian-name">יואב</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">אויארסבל</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">אריה</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">ניקו וויליאם</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">קדמי</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">דמבלה</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">אוחיון</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">פראן טורס</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">יאיר</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">ויניסיוס ג׳וניור</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">הקוף</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">פדריקו דימרקו</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">המתחכם</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">אודי כבודי</span>
+          </div>
+  </div>
+</div>
+
+<script>
+
+    new Chart(document.getElementById('champChart'), {
+        type: 'bar',
+        data: {"labels": ["\u05e6\u05e8\u05e4\u05ea", "\u05e1\u05e4\u05e8\u05d3", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05e8\u05d6\u05d9\u05dc", "\u05d2\u05e8\u05de\u05e0\u05d9\u05d4", "\u05d1\u05dc\u05d2\u05d9\u05d4", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4"], "datasets": [{"data": [10, 10, 3, 1, 1, 1, 1], "backgroundColor": ["#002395", "#c60b1e", "#006600", "#009c3b", "#000000", "#ef3340", "#74acdf"], "borderRadius": 6, "borderSkipped": false}]},
+        options: {"responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}, "tooltip": {"callbacks": {}}}, "scales": {"y": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "x": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
+    });
+
+    new Chart(document.getElementById('scorerChart'), {
+        type: 'bar',
+        data: {"labels": ["\u05d0\u05de\u05d1\u05e4\u05d4", "\u05d4\u05d0\u05e8\u05d9 \u05e7\u05d9\u05d9\u05df", "\u05d0\u05d5\u05d9\u05d0\u05e8\u05e1\u05d1\u05dc", "\u05e0\u05d9\u05e7\u05d5 \u05d5\u05d5\u05d9\u05dc\u05d9\u05d0\u05dd", "\u05d3\u05de\u05d1\u05dc\u05d4", "\u05e4\u05e8\u05d0\u05df \u05d8\u05d5\u05e8\u05e1", "\u05d5\u05d9\u05e0\u05d9\u05e1\u05d9\u05d5\u05e1 \u05d2\u05f3\u05d5\u05e0\u05d9\u05d5\u05e8", "\u05e4\u05d3\u05e8\u05d9\u05e7\u05d5 \u05d3\u05d9\u05de\u05e8\u05e7\u05d5", "\u05d0\u05d5\u05d3\u05d9 \u05db\u05d1\u05d5\u05d3\u05d9"], "datasets": [{"data": [14, 6, 1, 1, 1, 1, 1, 1, 1], "backgroundColor": ["#4a9eff", "#f5a623", "#7ed321", "#d0021b", "#9b59b6", "#1abc9c", "#e74c3c", "#3498db", "#f39c12"], "borderRadius": 6, "borderSkipped": false}]},
+        options: {"responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}, "tooltip": {"callbacks": {}}}, "scales": {"y": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "x": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
+    });
+
+    new Chart(document.getElementById('finalChart'), {
+        type: 'bar',
+        data: {"labels": ["\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4 \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4 \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05e1\u05e4\u05e8\u05d3 \u05e0\u05d2\u05d3 \u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05e8\u05d6\u05d9\u05dc \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d4\u05d5\u05dc\u05e0\u05d3 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3"], "datasets": [{"data": [4, 4, 4, 3, 3, 2, 2, 1], "backgroundColor": ["#4a9eff", "#f5a623", "#7ed321", "#d0021b", "#9b59b6", "#1abc9c", "#e74c3c", "#3498db"], "borderRadius": 6, "borderSkipped": false}]},
+        options: {"indexAxis": "y", "responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}}, "scales": {"x": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "y": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
+    });
+
+    new Chart(document.getElementById('semiChart'), {
+        type: 'bar',
+        data: {"labels": ["\u05e1\u05e4\u05e8\u05d3", "\u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05e8\u05d6\u05d9\u05dc", "\u05d4\u05d5\u05dc\u05e0\u05d3", "\u05d2\u05e8\u05de\u05e0\u05d9\u05d4"], "datasets": [{"data": [24, 22, 18, 15, 11, 7, 3, 2], "backgroundColor": ["#c60b1e", "#002395", "#cf081f", "#74acdf", "#006600", "#009c3b", "#ff6600", "#000000"], "borderRadius": 6, "borderSkipped": false}]},
+        options: {"indexAxis": "y", "responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}}, "scales": {"x": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "y": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
+    });
+
+</script>
+</body>
+</html>
