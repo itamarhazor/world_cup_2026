@@ -241,6 +241,87 @@
     font-weight: 700;
     margin-bottom: 16px;
   }
+
+  /* Podium grid */
+  .podium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .podium-col { }
+  .podium-medal {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a9eff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .podium-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+  .podium-team {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c8d8e8;
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .podium-bar-wrap {
+    flex: 1;
+    background: #0f1923;
+    border-radius: 4px;
+    height: 16px;
+    overflow: hidden;
+  }
+  .podium-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #1e3a5f, #4a9eff);
+  }
+  .podium-cnt {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a9eff;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* Group controversy */
+  .group-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(38,58,80,0.5);
+  }
+  .group-row:last-child { border-bottom: none; }
+  .group-letter {
+    font-weight: 700;
+    color: #fff;
+    font-size: 14px;
+    width: 50px;
+    flex-shrink: 0;
+  }
+  .group-picks { flex: 1; font-size: 13px; }
+  .gpick.p1 { color: #4a9eff; font-weight: 700; }
+  .gpick.p2 { color: #8a9bb0; }
+  .gpick-sep { color: #3a5068; margin: 0 6px; }
+  .group-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .badge-hot { background: rgba(231,76,60,0.2); color: #e74c3c; }
+  .badge-settled { background: rgba(46,204,113,0.2); color: #2ecc71; }
+  .badge-mild { background: rgba(74,158,255,0.15); color: #4a9eff; }
 </style>
 </head>
 <body>
@@ -254,7 +335,7 @@
 <!-- Summary Row -->
 <div class="summary-row">
   <div class="summary-card">
-    <div class="s-value">23</div>
+    <div class="s-value">30</div>
     <div class="s-label">משתתפים שהגישו</div>
   </div>
   <div class="summary-card">
@@ -266,7 +347,7 @@
     <div class="s-label">מלך שערים פופולרי</div>
   </div>
   <div class="summary-card">
-    <div class="s-value">10</div>
+    <div class="s-value">12</div>
     <div class="s-label">הצביעו לאלוף המוביל</div>
   </div>
 </div>
@@ -288,13 +369,23 @@
       <tbody>
         <tr>
           <td class="team-cell">צרפת</td>
-          <td class="count-cell">10 </td>
-          <td class="names-cell">גיא, אלעד, שלו, קדמי, אמיתי, אברגל, אוחיון, יונתן, איתמר, המתחכם</td>
+          <td class="count-cell">12 </td>
+          <td class="names-cell">גיא, אלעד, שלו, קדמי, שלומי, אמיתי, אברגל, אוחיון, יונתן, דרור, איתמר, המתחכם</td>
         </tr>
         <tr>
           <td class="team-cell">ספרד</td>
-          <td class="count-cell">10 <span class="ai-tag">AI</span></td>
-          <td class="names-cell">יואב, ליעד, אביבה, עוזיה, אריה, בןמשה, אביתר, 🤖 Gemini, 🤖 Claude, 🤖 ChatGPT</td>
+          <td class="count-cell">11 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">יואב, אביבה, עוזיה, אריה, משה, בןמשה, אבישי, אביתר, 🤖 Gemini, 🤖 Claude, 🤖 ChatGPT</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ברזיל</td>
+          <td class="count-cell">4 </td>
+          <td class="names-cell">אבי, יוסי, גיל, יאיר</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ארגנטינה</td>
+          <td class="count-cell">3 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">ליעד, ברק, 🤖 Grok</td>
         </tr>
         <tr>
           <td class="team-cell">פורטוגל</td>
@@ -302,24 +393,9 @@
           <td class="names-cell">ליחי, אילן, ניסן</td>
         </tr>
         <tr>
-          <td class="team-cell">ברזיל</td>
-          <td class="count-cell">1 </td>
-          <td class="names-cell">יוסי</td>
-        </tr>
-        <tr>
-          <td class="team-cell">גרמניה</td>
-          <td class="count-cell">1 </td>
-          <td class="names-cell">יאיר</td>
-        </tr>
-        <tr>
           <td class="team-cell">בלגיה</td>
           <td class="count-cell">1 </td>
           <td class="names-cell">הקוף</td>
-        </tr>
-        <tr>
-          <td class="team-cell">ארגנטינה</td>
-          <td class="count-cell">1 <span class="ai-tag">AI</span></td>
-          <td class="names-cell">🤖 Grok</td>
         </tr></tbody>
     </table>
   </div>
@@ -342,13 +418,13 @@
       <tbody>
         <tr>
           <td class="team-cell">אמבפה</td>
-          <td class="count-cell">14 <span class="ai-tag">AI</span></td>
-          <td class="names-cell">גיא, ליעד, אלעד, אביבה, עוזיה, שלו, אמיתי, יוסי, אברגל, יונתן, אביתר, 🤖 Claude, 🤖 Grok, 🤖 ChatGPT</td>
+          <td class="count-cell">19 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">גיא, ליעד, אלעד, אביבה, עוזיה, משה, שלו, שלומי, אמיתי, יוסי, אברגל, אוחיון, יונתן, יאיר, אביתר, המתחכם, 🤖 Claude, 🤖 Grok, 🤖 ChatGPT</td>
         </tr>
         <tr>
           <td class="team-cell">הארי קיין</td>
-          <td class="count-cell">6 <span class="ai-tag">AI</span></td>
-          <td class="names-cell">בןמשה, ליחי, אילן, ניסן, איתמר, 🤖 Gemini</td>
+          <td class="count-cell">7 <span class="ai-tag">AI</span></td>
+          <td class="names-cell">בןמשה, ליחי, אילן, ניסן, דרור, איתמר, 🤖 Gemini</td>
         </tr>
         <tr>
           <td class="team-cell">אויארסבל</td>
@@ -356,9 +432,14 @@
           <td class="names-cell">יואב</td>
         </tr>
         <tr>
-          <td class="team-cell">ניקו וויליאם</td>
+          <td class="team-cell">ניקו ויליאמס</td>
           <td class="count-cell">1 </td>
           <td class="names-cell">אריה</td>
+        </tr>
+        <tr>
+          <td class="team-cell">ויניסיוס ג׳וניור</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">אבי</td>
         </tr>
         <tr>
           <td class="team-cell">דמבלה</td>
@@ -366,24 +447,24 @@
           <td class="names-cell">קדמי</td>
         </tr>
         <tr>
-          <td class="team-cell">פראן טורס</td>
+          <td class="team-cell">אוליסה</td>
           <td class="count-cell">1 </td>
-          <td class="names-cell">אוחיון</td>
+          <td class="names-cell">אבישי</td>
         </tr>
         <tr>
-          <td class="team-cell">ויניסיוס ג׳וניור</td>
+          <td class="team-cell">רונאלדו</td>
           <td class="count-cell">1 </td>
-          <td class="names-cell">יאיר</td>
+          <td class="names-cell">גיל</td>
+        </tr>
+        <tr>
+          <td class="team-cell">האלנד</td>
+          <td class="count-cell">1 </td>
+          <td class="names-cell">ברק</td>
         </tr>
         <tr>
           <td class="team-cell">פדריקו דימרקו</td>
           <td class="count-cell">1 </td>
           <td class="names-cell">הקוף</td>
-        </tr>
-        <tr>
-          <td class="team-cell">אודי כבודי</td>
-          <td class="count-cell">1 </td>
-          <td class="names-cell">המתחכם</td>
         </tr></tbody>
     </table>
   </div>
@@ -460,19 +541,7 @@
   </div>
   <div class="section-body">
     <div class="subsection-title">בחירות אלוף נדירות</div>
-    
-          <div class="contrarian-item">
-            <span class="contrarian-name">יוסי</span>
-            <span class="contrarian-arrow">→</span>
-            <span class="contrarian-team">ברזיל</span>
-            <span class="contrarian-badge">בלעדי!</span>
-          </div>
-          <div class="contrarian-item">
-            <span class="contrarian-name">יאיר</span>
-            <span class="contrarian-arrow">→</span>
-            <span class="contrarian-team">גרמניה</span>
-            <span class="contrarian-badge">בלעדי!</span>
-          </div>
+    <p class="no-data">כולם בחרו מהמועמדים הפופולריים</p>
 
     <div class="divider"></div>
 
@@ -486,7 +555,12 @@
           <div class="contrarian-item">
             <span class="contrarian-name">אריה</span>
             <span class="contrarian-arrow">→</span>
-            <span class="contrarian-team">ניקו וויליאם</span>
+            <span class="contrarian-team">ניקו ויליאמס</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">אבי</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">ויניסיוס ג׳וניור</span>
           </div>
           <div class="contrarian-item">
             <span class="contrarian-name">קדמי</span>
@@ -494,25 +568,298 @@
             <span class="contrarian-team">דמבלה</span>
           </div>
           <div class="contrarian-item">
-            <span class="contrarian-name">אוחיון</span>
+            <span class="contrarian-name">אבישי</span>
             <span class="contrarian-arrow">→</span>
-            <span class="contrarian-team">פראן טורס</span>
+            <span class="contrarian-team">אוליסה</span>
           </div>
           <div class="contrarian-item">
-            <span class="contrarian-name">יאיר</span>
+            <span class="contrarian-name">גיל</span>
             <span class="contrarian-arrow">→</span>
-            <span class="contrarian-team">ויניסיוס ג׳וניור</span>
+            <span class="contrarian-team">רונאלדו</span>
+          </div>
+          <div class="contrarian-item">
+            <span class="contrarian-name">ברק</span>
+            <span class="contrarian-arrow">→</span>
+            <span class="contrarian-team">האלנד</span>
           </div>
           <div class="contrarian-item">
             <span class="contrarian-name">הקוף</span>
             <span class="contrarian-arrow">→</span>
             <span class="contrarian-team">פדריקו דימרקו</span>
           </div>
-          <div class="contrarian-item">
-            <span class="contrarian-name">המתחכם</span>
-            <span class="contrarian-arrow">→</span>
-            <span class="contrarian-team">אודי כבודי</span>
+  </div>
+</div>
+
+<!-- SECTION 7: Goals personality -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🔥</span>
+    <h2>תוקפן או שמרן? – ממוצע גולים לניחוש</h2>
+  </div>
+  <div class="section-body">
+    <p style="font-size:13px;color:#8a9bb0;margin-bottom:18px;">
+      ממוצע סך הגולים שכל משתתף ניחש לכל אחד מ-72 משחקי שלב הבתים.
+      <span style="color:#e74c3c;font-weight:700;">אדום = תוקפן (3.0+)</span> &nbsp;·&nbsp;
+      <span style="color:#4a9eff;font-weight:700;">כחול = מאוזן (2.5–3.0)</span> &nbsp;·&nbsp;
+      <span style="color:#2a4a6a;font-weight:700;">כהה = שמרן (&lt;2.5)</span> &nbsp;·&nbsp;
+      <span style="color:#9b59b6;font-weight:700;">סגול = AI</span>
+    </p>
+    <div class="chart-wrap" style="height:884px">
+      <canvas id="goalsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 8: Full podium -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🏅</span>
+    <h2>פודיום שלם – תחזיות מקום 1 עד 4</h2>
+  </div>
+  <div class="section-body">
+    <div class="podium-grid">
+      <div class="podium-col"><div class="podium-medal">🥇 אלוף</div>
+          <div class="podium-row">
+            <div class="podium-team">צרפת</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:100%"></div></div>
+            <div class="podium-cnt">12</div>
           </div>
+          <div class="podium-row">
+            <div class="podium-team">ספרד</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:92%"></div></div>
+            <div class="podium-cnt">11</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ברזיל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:33%"></div></div>
+            <div class="podium-cnt">4</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ארגנטינה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:25%"></div></div>
+            <div class="podium-cnt">3</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">פורטוגל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:25%"></div></div>
+            <div class="podium-cnt">3</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">בלגיה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:8%"></div></div>
+            <div class="podium-cnt">1</div>
+          </div></div><div class="podium-col"><div class="podium-medal">🥈 מקום שני</div>
+          <div class="podium-row">
+            <div class="podium-team">אנגליה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:100%"></div></div>
+            <div class="podium-cnt">8</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ארגנטינה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:88%"></div></div>
+            <div class="podium-cnt">7</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ספרד</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:75%"></div></div>
+            <div class="podium-cnt">6</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ברזיל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:50%"></div></div>
+            <div class="podium-cnt">4</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">פורטוגל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:38%"></div></div>
+            <div class="podium-cnt">3</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">צרפת</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:38%"></div></div>
+            <div class="podium-cnt">3</div>
+          </div></div><div class="podium-col"><div class="podium-medal">🥉 מקום שלישי</div>
+          <div class="podium-row">
+            <div class="podium-team">ספרד</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:100%"></div></div>
+            <div class="podium-cnt">10</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">צרפת</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:80%"></div></div>
+            <div class="podium-cnt">8</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ארגנטינה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:40%"></div></div>
+            <div class="podium-cnt">4</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">אנגליה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:40%"></div></div>
+            <div class="podium-cnt">4</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">פורטוגל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:20%"></div></div>
+            <div class="podium-cnt">2</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ברזיל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:20%"></div></div>
+            <div class="podium-cnt">2</div>
+          </div></div><div class="podium-col"><div class="podium-medal">4️⃣ מקום רביעי</div>
+          <div class="podium-row">
+            <div class="podium-team">ארגנטינה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:100%"></div></div>
+            <div class="podium-cnt">6</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">אנגליה</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:100%"></div></div>
+            <div class="podium-cnt">6</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">צרפת</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:83%"></div></div>
+            <div class="podium-cnt">5</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">פורטוגל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:83%"></div></div>
+            <div class="podium-cnt">5</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ספרד</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:67%"></div></div>
+            <div class="podium-cnt">4</div>
+          </div>
+          <div class="podium-row">
+            <div class="podium-team">ברזיל</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:50%"></div></div>
+            <div class="podium-cnt">3</div>
+          </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 9: Group controversy -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🎯</span>
+    <h2>בתים שנויים במחלוקת – כמה הסכמה יש?</h2>
+  </div>
+  <div class="section-body">
+    <p style="font-size:13px;color:#8a9bb0;margin-bottom:18px;">אחוז המשתתפים שבחרו את אותה קבוצה לסיים ראשונה בכל בית.</p>
+    
+        <div class="group-row">
+          <div class="group-letter">בית D</div>
+          <div class="group-picks">
+            <span class="gpick p1">ארה״ב (65%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">טורקיה (50%)</span>
+          </div>
+          <span class="group-badge badge-hot">שנוי במחלוקת</span>
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית A</div>
+          <div class="group-picks">
+            <span class="gpick p1">מקסיקו (71%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">דרום קוריאה (50%)</span>
+          </div>
+          <span class="group-badge badge-hot">שנוי במחלוקת</span>
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית B</div>
+          <div class="group-picks">
+            <span class="gpick p1">שוויץ (74%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">קנדה (65%)</span>
+          </div>
+          <span class="group-badge badge-hot">שנוי במחלוקת</span>
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית C</div>
+          <div class="group-picks">
+            <span class="gpick p1">ברזיל (79%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">מרוקו (74%)</span>
+          </div>
+          
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית F</div>
+          <div class="group-picks">
+            <span class="gpick p1">הולנד (85%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">יפן (65%)</span>
+          </div>
+          
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית I</div>
+          <div class="group-picks">
+            <span class="gpick p1">צרפת (88%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">נורווגיה (56%)</span>
+          </div>
+          
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית G</div>
+          <div class="group-picks">
+            <span class="gpick p1">בלגיה (91%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">מצרים (68%)</span>
+          </div>
+          
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית L</div>
+          <div class="group-picks">
+            <span class="gpick p1">אנגליה (91%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">קרואטיה (85%)</span>
+          </div>
+          
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית E</div>
+          <div class="group-picks">
+            <span class="gpick p1">גרמניה (94%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">אקוודור (59%)</span>
+          </div>
+          
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית H</div>
+          <div class="group-picks">
+            <span class="gpick p1">ספרד (97%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">אורוגוואי (94%)</span>
+          </div>
+          <span class="group-badge badge-settled">מוסכם</span>
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית J</div>
+          <div class="group-picks">
+            <span class="gpick p1">ארגנטינה (97%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">אוסטריה (91%)</span>
+          </div>
+          <span class="group-badge badge-settled">מוסכם</span>
+        </div>
+        <div class="group-row">
+          <div class="group-letter">בית K</div>
+          <div class="group-picks">
+            <span class="gpick p1">פורטוגל (100%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">קולומביה (97%)</span>
+          </div>
+          <span class="group-badge badge-settled">מוסכם</span>
+        </div>
   </div>
 </div>
 
@@ -520,25 +867,31 @@
 
     new Chart(document.getElementById('champChart'), {
         type: 'bar',
-        data: {"labels": ["\u05e6\u05e8\u05e4\u05ea", "\u05e1\u05e4\u05e8\u05d3", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05e8\u05d6\u05d9\u05dc", "\u05d2\u05e8\u05de\u05e0\u05d9\u05d4", "\u05d1\u05dc\u05d2\u05d9\u05d4", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4"], "datasets": [{"data": [10, 10, 3, 1, 1, 1, 1], "backgroundColor": ["#002395", "#c60b1e", "#006600", "#009c3b", "#000000", "#ef3340", "#74acdf"], "borderRadius": 6, "borderSkipped": false}]},
+        data: {"labels": ["\u05e6\u05e8\u05e4\u05ea", "\u05e1\u05e4\u05e8\u05d3", "\u05d1\u05e8\u05d6\u05d9\u05dc", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05dc\u05d2\u05d9\u05d4"], "datasets": [{"data": [12, 11, 4, 3, 3, 1], "backgroundColor": ["#002395", "#c60b1e", "#009c3b", "#74acdf", "#006600", "#ef3340"], "borderRadius": 6, "borderSkipped": false}]},
         options: {"responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}, "tooltip": {"callbacks": {}}}, "scales": {"y": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "x": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
     });
 
     new Chart(document.getElementById('scorerChart'), {
         type: 'bar',
-        data: {"labels": ["\u05d0\u05de\u05d1\u05e4\u05d4", "\u05d4\u05d0\u05e8\u05d9 \u05e7\u05d9\u05d9\u05df", "\u05d0\u05d5\u05d9\u05d0\u05e8\u05e1\u05d1\u05dc", "\u05e0\u05d9\u05e7\u05d5 \u05d5\u05d5\u05d9\u05dc\u05d9\u05d0\u05dd", "\u05d3\u05de\u05d1\u05dc\u05d4", "\u05e4\u05e8\u05d0\u05df \u05d8\u05d5\u05e8\u05e1", "\u05d5\u05d9\u05e0\u05d9\u05e1\u05d9\u05d5\u05e1 \u05d2\u05f3\u05d5\u05e0\u05d9\u05d5\u05e8", "\u05e4\u05d3\u05e8\u05d9\u05e7\u05d5 \u05d3\u05d9\u05de\u05e8\u05e7\u05d5", "\u05d0\u05d5\u05d3\u05d9 \u05db\u05d1\u05d5\u05d3\u05d9"], "datasets": [{"data": [14, 6, 1, 1, 1, 1, 1, 1, 1], "backgroundColor": ["#4a9eff", "#f5a623", "#7ed321", "#d0021b", "#9b59b6", "#1abc9c", "#e74c3c", "#3498db", "#f39c12"], "borderRadius": 6, "borderSkipped": false}]},
+        data: {"labels": ["\u05d0\u05de\u05d1\u05e4\u05d4", "\u05d4\u05d0\u05e8\u05d9 \u05e7\u05d9\u05d9\u05df", "\u05d0\u05d5\u05d9\u05d0\u05e8\u05e1\u05d1\u05dc", "\u05e0\u05d9\u05e7\u05d5 \u05d5\u05d9\u05dc\u05d9\u05d0\u05de\u05e1", "\u05d5\u05d9\u05e0\u05d9\u05e1\u05d9\u05d5\u05e1 \u05d2\u05f3\u05d5\u05e0\u05d9\u05d5\u05e8", "\u05d3\u05de\u05d1\u05dc\u05d4", "\u05d0\u05d5\u05dc\u05d9\u05e1\u05d4", "\u05e8\u05d5\u05e0\u05d0\u05dc\u05d3\u05d5", "\u05d4\u05d0\u05dc\u05e0\u05d3", "\u05e4\u05d3\u05e8\u05d9\u05e7\u05d5 \u05d3\u05d9\u05de\u05e8\u05e7\u05d5"], "datasets": [{"data": [19, 7, 1, 1, 1, 1, 1, 1, 1, 1], "backgroundColor": ["#4a9eff", "#f5a623", "#7ed321", "#d0021b", "#9b59b6", "#1abc9c", "#e74c3c", "#3498db", "#f39c12", "#2ecc71"], "borderRadius": 6, "borderSkipped": false}]},
         options: {"responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}, "tooltip": {"callbacks": {}}}, "scales": {"y": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "x": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
     });
 
     new Chart(document.getElementById('finalChart'), {
         type: 'bar',
-        data: {"labels": ["\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4 \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4 \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05e1\u05e4\u05e8\u05d3 \u05e0\u05d2\u05d3 \u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05e8\u05d6\u05d9\u05dc \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d4\u05d5\u05dc\u05e0\u05d3 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3"], "datasets": [{"data": [4, 4, 4, 3, 3, 2, 2, 1], "backgroundColor": ["#4a9eff", "#f5a623", "#7ed321", "#d0021b", "#9b59b6", "#1abc9c", "#e74c3c", "#3498db"], "borderRadius": 6, "borderSkipped": false}]},
+        data: {"labels": ["\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4 \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d1\u05e8\u05d6\u05d9\u05dc \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4 \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d1\u05e8\u05d6\u05d9\u05dc \u05e0\u05d2\u05d3 \u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4 \u05e0\u05d2\u05d3 \u05e1\u05e4\u05e8\u05d3", "\u05e1\u05e4\u05e8\u05d3 \u05e0\u05d2\u05d3 \u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc"], "datasets": [{"data": [6, 5, 5, 3, 3, 3, 3, 2], "backgroundColor": ["#4a9eff", "#f5a623", "#7ed321", "#d0021b", "#9b59b6", "#1abc9c", "#e74c3c", "#3498db"], "borderRadius": 6, "borderSkipped": false}]},
         options: {"indexAxis": "y", "responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}}, "scales": {"x": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "y": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
     });
 
     new Chart(document.getElementById('semiChart'), {
         type: 'bar',
-        data: {"labels": ["\u05e1\u05e4\u05e8\u05d3", "\u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d1\u05e8\u05d6\u05d9\u05dc", "\u05d4\u05d5\u05dc\u05e0\u05d3", "\u05d2\u05e8\u05de\u05e0\u05d9\u05d4"], "datasets": [{"data": [24, 22, 18, 15, 11, 7, 3, 2], "backgroundColor": ["#c60b1e", "#002395", "#cf081f", "#74acdf", "#006600", "#009c3b", "#ff6600", "#000000"], "borderRadius": 6, "borderSkipped": false}]},
+        data: {"labels": ["\u05e1\u05e4\u05e8\u05d3", "\u05e6\u05e8\u05e4\u05ea", "\u05d0\u05e8\u05d2\u05e0\u05d8\u05d9\u05e0\u05d4", "\u05d0\u05e0\u05d2\u05dc\u05d9\u05d4", "\u05d1\u05e8\u05d6\u05d9\u05dc", "\u05e4\u05d5\u05e8\u05d8\u05d5\u05d2\u05dc", "\u05d2\u05e8\u05de\u05e0\u05d9\u05d4", "\u05d4\u05d5\u05dc\u05e0\u05d3"], "datasets": [{"data": [31, 28, 20, 19, 13, 13, 3, 2], "backgroundColor": ["#c60b1e", "#002395", "#74acdf", "#cf081f", "#009c3b", "#006600", "#000000", "#ff6600"], "borderRadius": 6, "borderSkipped": false}]},
+        options: {"indexAxis": "y", "responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}}, "scales": {"x": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "y": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
+    });
+
+    new Chart(document.getElementById('goalsChart'), {
+        type: 'bar',
+        data: {"labels": ["\u05d3\u05e8\u05d5\u05e8", "\u05e9\u05dc\u05d5\u05de\u05d9", "\u05d1\u05e8\u05e7", "\u05dc\u05d9\u05e2\u05d3", "\u05d0\u05d5\u05d7\u05d9\u05d5\u05df", "\u05e2\u05d5\u05d6\u05d9\u05d4", "\u05d0\u05d9\u05ea\u05de\u05e8", "\u05d0\u05d9\u05dc\u05df", "\u05d0\u05d1\u05d9\u05d1\u05d4", "\u05d0\u05e8\u05d9\u05d4", "\u05d0\u05d1\u05d9\u05e9\u05d9", "\u05e0\u05d9\u05e1\u05df", "\u05dc\u05d9\u05d7\u05d9", "\u05d2\u05d9\u05d0", "Gemini", "\u05de\u05e9\u05d4", "\u05d1\u05df\u05de\u05e9\u05d4", "\u05d9\u05d5\u05d0\u05d1", "\u05d0\u05dc\u05e2\u05d3", "\u05d0\u05d1\u05d9", "\u05d0\u05d1\u05d9\u05ea\u05e8", "\u05d9\u05d5\u05e1\u05d9", "\u05e9\u05dc\u05d5", "\u05d0\u05de\u05d9\u05ea\u05d9", "Grok", "\u05d9\u05d0\u05d9\u05e8", "\u05d2\u05d9\u05dc", "\u05d9\u05d5\u05e0\u05ea\u05df", "ChatGPT", "Claude", "\u05d4\u05e7\u05d5\u05e3", "\u05d0\u05d1\u05e8\u05d2\u05dc", "\u05e7\u05d3\u05de\u05d9", "\u05d4\u05de\u05ea\u05d7\u05db\u05dd"], "datasets": [{"data": [3.32, 3.26, 3.25, 3.12, 3.08, 3.04, 2.97, 2.96, 2.88, 2.78, 2.71, 2.71, 2.65, 2.64, 2.64, 2.61, 2.58, 2.58, 2.57, 2.5, 2.43, 2.42, 2.42, 2.38, 2.38, 2.36, 2.35, 2.35, 2.29, 2.24, 2.15, 2.03, 1.96, 1.0], "backgroundColor": ["#e74c3c", "#e74c3c", "#e74c3c", "#e74c3c", "#e74c3c", "#e74c3c", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#9b59b6", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#4a9eff", "#2a4a6a", "#2a4a6a", "#2a4a6a", "#2a4a6a", "#9b59b6", "#2a4a6a", "#2a4a6a", "#2a4a6a", "#9b59b6", "#9b59b6", "#f5a623", "#2a4a6a", "#2a4a6a", "#f5a623"], "borderRadius": 6, "borderSkipped": false}]},
         options: {"indexAxis": "y", "responsive": true, "maintainAspectRatio": false, "plugins": {"legend": {"display": false}}, "scales": {"x": {"beginAtZero": true, "ticks": {"color": "#8a9bb0", "stepSize": 1}, "grid": {"color": "rgba(255,255,255,0.05)"}}, "y": {"ticks": {"color": "#c8d8e8", "font": {"size": 13}}, "grid": {"display": false}}}}
     });
 

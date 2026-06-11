@@ -7,7 +7,7 @@ Reads World_Cup_Bets.csv and generates predictions_analysis.html
 import csv
 import json
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 CSV_PATH = Path(__file__).parent / 'World_Cup_Bets.csv'
@@ -17,6 +17,7 @@ AI_ENGINES = {'Gemini', 'Claude', 'Grok', 'ChatGPT'}
 FUN_PARTICIPANTS = {'הקוף', 'המתחכם'}
 SEMI_SLOT_ROWS = {'קבוצה 1 – חצי גמר', 'קבוצה 2 – חצי גמר', 'קבוצה 3 – חצי גמר', 'קבוצה 4 – חצי גמר'}
 QF_SLOT_ROWS = {f'קבוצה {i} – רבע גמר' for i in range(1, 9)}
+GROUP_LETTERS = list('ABCDEFGHIJKL')
 
 
 def load_csv():
@@ -69,6 +70,12 @@ def analyze():
     final_bets = {}
     semi_picks = []   # flat list of all teams predicted to be semifinalists
     qf_picks = []     # flat list of all teams predicted to be quarterfinalists
+    second_place_bets = {}
+    third_place_bets = {}
+    fourth_place_bets = {}
+    group_p1 = {g: Counter() for g in GROUP_LETTERS}  # group -> top pick distribution
+    group_p2 = {g: Counter() for g in GROUP_LETTERS}
+    participant_goals = defaultdict(list)   # name -> list of total goals per game
 
     for row in rows:
         if not row or not row[0].strip():
@@ -81,12 +88,39 @@ def analyze():
             scorer_bets = get_bets(row, participants)
         elif 'מ104' in event:
             final_bets = get_bets(row, participants)
+        elif event == 'מקום שני':
+            second_place_bets = get_bets(row, participants)
+        elif event == 'מקום שלישי':
+            third_place_bets = get_bets(row, participants)
+        elif event == 'מקום רביעי':
+            fourth_place_bets = get_bets(row, participants)
         elif event in SEMI_SLOT_ROWS:
             bets = get_bets(row, participants)
             semi_picks.extend(bets.values())
         elif event in QF_SLOT_ROWS:
             bets = get_bets(row, participants)
             qf_picks.extend(bets.values())
+        else:
+            # Group stage games for goal-count analysis
+            for g in GROUP_LETTERS:
+                if event == f'מקום 1 – בית {g}':
+                    for name, team in get_bets(row, participants).items():
+                        group_p1[g][team] += 1
+                elif event == f'מקום 2 – בית {g}':
+                    for name, team in get_bets(row, participants).items():
+                        group_p2[g][team] += 1
+
+            if '|' in event:
+                prefix = event.split('|')[0].replace('מ', '').strip()
+                try:
+                    num = int(prefix)
+                    if 1 <= num <= 72:
+                        for name, bet in get_bets(row, participants).items():
+                            m = re.search(r'(\d+)\s*[-–]\s*(\d+)', bet)
+                            if m:
+                                participant_goals[name].append(int(m.group(1)) + int(m.group(2)))
+                except ValueError:
+                    pass
 
     scorer_bets_norm = {k: normalize_scorer(v) for k, v in scorer_bets.items()}
 
@@ -137,6 +171,34 @@ def analyze():
     submitted_fun = [n for n in fun_names if n in champion_bets]
     submitted_non_ai = submitted_humans + submitted_fun
 
+    # Goals-per-game per participant (group stage only)
+    goals_ranking = sorted(
+        [(name, sum(g) / len(g), len(g)) for name, g in participant_goals.items() if len(g) >= 50],
+        key=lambda x: -x[1]
+    )
+
+    # Group controversy: per group, % who agree on P1 pick
+    group_controversy = []
+    for g in GROUP_LETTERS:
+        total = sum(group_p1[g].values())
+        if total and group_p1[g]:
+            top_team, top_count = group_p1[g].most_common(1)[0]
+            second = group_p1[g].most_common(2)
+            p2_top = group_p2[g].most_common(1)
+            group_controversy.append({
+                'group': g,
+                'p1_team': top_team,
+                'p1_pct': round(100 * top_count / total),
+                'p2_team': p2_top[0][0] if p2_top else '?',
+                'p2_pct': round(100 * p2_top[0][1] / sum(group_p2[g].values())) if p2_top and sum(group_p2[g].values()) else 0,
+            })
+    group_controversy.sort(key=lambda x: x['p1_pct'])  # most controversial first
+
+    # Podium: runner-up, 3rd, 4th
+    second_counter = Counter(second_place_bets.values()).most_common()
+    third_counter = Counter(third_place_bets.values()).most_common()
+    fourth_counter = Counter(fourth_place_bets.values()).most_common()
+
     return {
         'total_participants': len(submitted_non_ai),
         'all_names': all_names,
@@ -157,6 +219,11 @@ def analyze():
         'qf_counter': qf_counter.most_common(12),
         'contrarians': contrarians,
         'unique_scorers': unique_scorers,
+        'goals_ranking': goals_ranking,
+        'group_controversy': group_controversy,
+        'second_counter': second_counter,
+        'third_counter': third_counter,
+        'fourth_counter': fourth_counter,
     }
 
 
@@ -363,12 +430,77 @@ def generate_html(d):
             <span class="contrarian-team">{player}</span>
           </div>"""
 
+    # ── Section 7b: Goals ranking ─────────────────────────────────────────────
+    goals_labels = [name for name, avg, n in d['goals_ranking']]
+    goals_vals = [round(avg, 2) for name, avg, n in d['goals_ranking']]
+    goals_colors = []
+    for name, avg, n in d['goals_ranking']:
+        if name in AI_ENGINES:
+            goals_colors.append('#9b59b6')
+        elif name in FUN_PARTICIPANTS:
+            goals_colors.append('#f5a623')
+        elif avg >= 3.0:
+            goals_colors.append('#e74c3c')
+        elif avg >= 2.5:
+            goals_colors.append('#4a9eff')
+        else:
+            goals_colors.append('#2a4a6a')
+
+    # ── Section 8: Full podium ────────────────────────────────────────────────
+    podium_positions = [
+        ('🥇', 'אלוף', d['champ_counter']),
+        ('🥈', 'מקום שני', d['second_counter']),
+        ('🥉', 'מקום שלישי', d['third_counter']),
+        ('4️⃣', 'מקום רביעי', d['fourth_counter']),
+    ]
+    podium_html = ''
+    for medal, label, counter in podium_positions:
+        podium_html += f'<div class="podium-col"><div class="podium-medal">{medal} {label}</div>'
+        for team, cnt in counter[:6]:
+            bar_w = round(100 * cnt / counter[0][1]) if counter else 0
+            podium_html += f"""
+          <div class="podium-row">
+            <div class="podium-team">{team}</div>
+            <div class="podium-bar-wrap"><div class="podium-bar" style="width:{bar_w}%"></div></div>
+            <div class="podium-cnt">{cnt}</div>
+          </div>"""
+        podium_html += '</div>'
+
+    # ── Section 9: Group controversy ─────────────────────────────────────────
+    controversy_html = ''
+    for g_info in d['group_controversy']:
+        g = g_info['group']
+        p1_team = g_info['p1_team']
+        p1_pct = g_info['p1_pct']
+        p2_team = g_info['p2_team']
+        p2_pct = g_info['p2_pct']
+        if p1_pct <= 75:
+            badge_cls = 'badge-hot'
+            badge_txt = 'שנוי במחלוקת'
+        elif p1_pct >= 95:
+            badge_cls = 'badge-settled'
+            badge_txt = 'מוסכם'
+        else:
+            badge_cls = 'badge-mild'
+            badge_txt = ''
+        controversy_html += f"""
+        <div class="group-row">
+          <div class="group-letter">בית {g}</div>
+          <div class="group-picks">
+            <span class="gpick p1">{p1_team} ({p1_pct}%)</span>
+            <span class="gpick-sep">·</span>
+            <span class="gpick p2">{p2_team} ({p2_pct}%)</span>
+          </div>
+          {'<span class="group-badge ' + badge_cls + '">' + badge_txt + '</span>' if badge_txt else ''}
+        </div>"""
+
     # ── JS charts ────────────────────────────────────────────────────────────
     charts_js = ''
     charts_js += bar_chart('champChart', champ_labels, champ_vals, champ_colors)
     charts_js += bar_chart('scorerChart', scorer_labels, scorer_vals, scorer_colors)
     charts_js += horizontal_bar_chart('finalChart', final_labels, final_vals, final_colors)
     charts_js += horizontal_bar_chart('semiChart', semi_labels, semi_vals, semi_colors)
+    charts_js += horizontal_bar_chart('goalsChart', goals_labels, goals_vals, goals_colors)
 
     # Stats summary
     total = d['total_participants']
@@ -619,6 +751,87 @@ def generate_html(d):
     font-weight: 700;
     margin-bottom: 16px;
   }}
+
+  /* Podium grid */
+  .podium-grid {{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }}
+  .podium-col {{ }}
+  .podium-medal {{
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a9eff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }}
+  .podium-row {{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }}
+  .podium-team {{
+    font-size: 13px;
+    font-weight: 600;
+    color: #c8d8e8;
+    width: 80px;
+    flex-shrink: 0;
+  }}
+  .podium-bar-wrap {{
+    flex: 1;
+    background: #0f1923;
+    border-radius: 4px;
+    height: 16px;
+    overflow: hidden;
+  }}
+  .podium-bar {{
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #1e3a5f, #4a9eff);
+  }}
+  .podium-cnt {{
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a9eff;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }}
+
+  /* Group controversy */
+  .group-row {{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(38,58,80,0.5);
+  }}
+  .group-row:last-child {{ border-bottom: none; }}
+  .group-letter {{
+    font-weight: 700;
+    color: #fff;
+    font-size: 14px;
+    width: 50px;
+    flex-shrink: 0;
+  }}
+  .group-picks {{ flex: 1; font-size: 13px; }}
+  .gpick.p1 {{ color: #4a9eff; font-weight: 700; }}
+  .gpick.p2 {{ color: #8a9bb0; }}
+  .gpick-sep {{ color: #3a5068; margin: 0 6px; }}
+  .group-badge {{
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }}
+  .badge-hot {{ background: rgba(231,76,60,0.2); color: #e74c3c; }}
+  .badge-settled {{ background: rgba(46,204,113,0.2); color: #2ecc71; }}
+  .badge-mild {{ background: rgba(74,158,255,0.15); color: #4a9eff; }}
 </style>
 </head>
 <body>
@@ -740,6 +953,51 @@ def generate_html(d):
 
     <div class="subsection-title">בחירות מלך שערים ייחודיות</div>
     {unique_scorer_html}
+  </div>
+</div>
+
+<!-- SECTION 7: Goals personality -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🔥</span>
+    <h2>תוקפן או שמרן? – ממוצע גולים לניחוש</h2>
+  </div>
+  <div class="section-body">
+    <p style="font-size:13px;color:#8a9bb0;margin-bottom:18px;">
+      ממוצע סך הגולים שכל משתתף ניחש לכל אחד מ-72 משחקי שלב הבתים.
+      <span style="color:#e74c3c;font-weight:700;">אדום = תוקפן (3.0+)</span> &nbsp;·&nbsp;
+      <span style="color:#4a9eff;font-weight:700;">כחול = מאוזן (2.5–3.0)</span> &nbsp;·&nbsp;
+      <span style="color:#2a4a6a;font-weight:700;">כהה = שמרן (&lt;2.5)</span> &nbsp;·&nbsp;
+      <span style="color:#9b59b6;font-weight:700;">סגול = AI</span>
+    </p>
+    <div class="chart-wrap" style="height:{max(260, len(goals_labels)*26)}px">
+      <canvas id="goalsChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 8: Full podium -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🏅</span>
+    <h2>פודיום שלם – תחזיות מקום 1 עד 4</h2>
+  </div>
+  <div class="section-body">
+    <div class="podium-grid">
+      {podium_html}
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 9: Group controversy -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🎯</span>
+    <h2>בתים שנויים במחלוקת – כמה הסכמה יש?</h2>
+  </div>
+  <div class="section-body">
+    <p style="font-size:13px;color:#8a9bb0;margin-bottom:18px;">אחוז המשתתפים שבחרו את אותה קבוצה לסיים ראשונה בכל בית.</p>
+    {controversy_html}
   </div>
 </div>
 
