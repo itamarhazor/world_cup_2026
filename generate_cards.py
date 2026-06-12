@@ -12,6 +12,7 @@ with open('World_Cup_Bets.csv', 'r', encoding='utf-8') as f:
 header = rows[0]
 participant_cols = list(range(2, len(header), 2))
 participant_names = [header[i] for i in participant_cols]
+total_participants = len(participant_names)
 
 os.makedirs('cards', exist_ok=True)
 
@@ -48,7 +49,7 @@ for row in rows[1:]:
                 bets.append((participant_names[i], bet))
 
     submitted = len(bets)
-    missing = 35 - submitted
+    missing = total_participants - submitted
 
     home_win = draw = away_win = 0
     score_counts = {}

@@ -185,6 +185,13 @@
     color: #3a5068;
     letter-spacing: 0.5px;
   }
+  .match-date {
+    font-size: 11px;
+    color: #7a9bb5;
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -193,14 +200,12 @@
   <!-- Header -->
   <div class="header">
     <div class="match-meta">⚽ בית I &nbsp;·&nbsp; משחק 61</div>
+    <div class="match-date">יום ו', 26.6 &nbsp;&nbsp;|&nbsp;&nbsp; 22:00</div>
     <!-- e.g. GROUP_LABEL = "בית A", MATCH_LABEL = "משחק 1" -->
     <div class="teams">
       <div class="team">נורווגיה</div>
       <div class="vs">נגד</div>
       <div class="team">צרפת</div>
-    </div>
-    <div class="bet-count">
-      <span>34</span> חברים הגישו ניחוש &nbsp;·&nbsp; <span>1</span> טרם הגישו
     </div>
   </div>
 
@@ -320,7 +325,7 @@ HEADER
   נורווגיה         — home team name in Hebrew
   צרפת         — away team name in Hebrew
   34   — number of participants with a non-empty bet
-  1     — number of participants with no bet (35 - submitted)
+  0     — number of participants with no bet (35 - submitted)
 
 OUTCOME SECTION (bars scale to the max of the three counts = 100%)
   1    — number of bets predicting home win

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בית F – סדר הבית</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+    padding: 32px 24px;
+    direction: rtl;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #f0f6fc;
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #8b949e;
+    font-size: 0.95rem;
+    margin-bottom: 36px;
+  }
+
+  .cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .combo-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+    padding: 20px 22px;
+    min-width: 200px;
+    max-width: 240px;
+    flex: 1 1 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: border-color 0.2s;
+  }
+
+  .combo-card:first-child {
+    border-color: #d29922;
+    box-shadow: 0 0 0 1px #d29922;
+  }
+
+  .vote-badge {
+    background: #21262d;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #58a6ff;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    direction: ltr;
+  }
+
+  .combo-card:first-child .vote-badge {
+    background: #2d2208;
+    color: #e3b341;
+  }
+
+  .ranks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .rank-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0d1117;
+    border-radius: 8px;
+    padding: 7px 10px;
+  }
+
+
+  .rank-icon {
+    font-size: 1.1rem;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  .team-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-top: 1px solid #21262d;
+    padding-top: 12px;
+    justify-content: flex-start;
+  }
+
+  .chip {
+    background: #21262d;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 0.78rem;
+    color: #c9d1d9;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+  <h1>⚽ בית F</h1>
+  <p class="subtitle">תחזיות סיום הבית · 34 משתתפים · 7 צירופים שונים</p>
+  <div class="cards-wrapper">
+    
+        <div class="combo-card">
+            <div class="vote-badge">18 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">יפן</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">גיא</span><span class="chip">יואב</span><span class="chip">ליעד</span><span class="chip">אלעד</span><span class="chip">בןמשה</span><span class="chip">שלו</span><span class="chip">אבי</span><span class="chip">ליחי</span><span class="chip">אמיתי</span><span class="chip">גיל</span><span class="chip">אוחיון</span><span class="chip">ניסן</span><span class="chip">יונתן</span><span class="chip">דרור</span><span class="chip">יאיר</span><span class="chip">איתמר</span><span class="chip">המתחכם</span><span class="chip">Grok</span></div>
+        </div>
+        <div class="combo-card">
+            <div class="vote-badge">6 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">יפן</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">אריה</span><span class="chip">משה</span><span class="chip">אבישי</span><span class="chip">אברגל</span><span class="chip">אילן</span><span class="chip">אביתר</span></div>
+        </div>
+        <div class="combo-card">
+            <div class="vote-badge">4 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">יפן</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">אביבה</span><span class="chip">עוזיה</span><span class="chip">Gemini</span><span class="chip">ChatGPT</span></div>
+        </div>
+        <div class="combo-card">
+            <div class="vote-badge">3 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">יפן</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">שלומי</span><span class="chip">יוסי</span><span class="chip">הקוף</span></div>
+        </div>
+        <div class="combo-card">
+            <div class="vote-badge">1 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">יפן</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">קדמי</span></div>
+        </div>
+        <div class="combo-card">
+            <div class="vote-badge">1 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">יפן</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">ברק</span></div>
+        </div>
+        <div class="combo-card">
+            <div class="vote-badge">1 / 34</div>
+            <div class="ranks">
+            <div class="rank-row ">
+                <span class="rank-icon">🥇</span>
+                <span class="team-name">יפן</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥈</span>
+                <span class="team-name">הולנד</span>
+            </div>
+            <div class="rank-row ">
+                <span class="rank-icon">🥉</span>
+                <span class="team-name">שוודיה</span>
+            </div>
+            <div class="rank-row fourth">
+                <span class="rank-icon">4</span>
+                <span class="team-name">טוניסיה</span>
+            </div>
+            </div>
+            <div class="chips"><span class="chip">Claude</span></div>
+        </div>
+  </div>
+</body>
+</html>
