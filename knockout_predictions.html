@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תחזיות שלבי הנוקאאוט – מונדיאל 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0a0e1a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #fbbf24, #f97316, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 36px;
+  }
+
+  .stage-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .nav-btn {
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.2s;
+    opacity: 0.65;
+  }
+  .nav-btn:hover, .nav-btn.active { opacity: 1; transform: scale(1.05); }
+
+  .stages-container {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 52px;
+  }
+
+  .stage-section {
+    background: #111827;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .stage-header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .stage-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .stage-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  .stage-meta {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .chart-area {
+    padding: 20px 24px 28px;
+  }
+
+  .team-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+
+  .team-name {
+    width: 120px;
+    text-align: right;
+    font-size: 0.88rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bar-wrap {
+    flex: 1;
+    background: #1e293b;
+    border-radius: 6px;
+    height: 26px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+    min-width: 28px;
+    direction: ltr;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+
+  .vote-label {
+    width: 46px;
+    text-align: left;
+    font-size: 0.82rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    direction: ltr;
+  }
+
+  .pct-label {
+    width: 38px;
+    text-align: left;
+    font-size: 0.75rem;
+    color: #64748b;
+    flex-shrink: 0;
+    direction: ltr;
+  }
+
+  .divider-row {
+    border-top: 1px dashed #1e293b;
+    margin: 14px 0;
+  }
+
+  .collapse-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 0.78rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-top: 8px;
+    display: block;
+  }
+  .collapse-btn:hover { color: #94a3b8; background: #1e293b; }
+
+  .hidden-teams { display: none; }
+  .hidden-teams.show { display: block; }
+
+  /* Emoji for stage icons */
+  .round32-icon::before { content: '32'; font-size: 0.9rem; }
+  .round16-icon::before { content: '16'; font-size: 0.9rem; }
+  .qf-icon::before { content: '⚔️'; }
+  .sf-icon::before { content: '🔥'; }
+  .tp-icon::before { content: '🥉'; }
+  .final-icon::before { content: '🏆'; }
+
+  @media (max-width: 600px) {
+    .team-name { width: 90px; font-size: 0.8rem; }
+    .bar-fill { font-size: 0.7rem; }
+    h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>מונדיאל 2026 – תחזיות שלבי הנוקאאוט</h1>
+<p class="subtitle">כמה מהמשתתפים (מתוך 33) הימרו שכל קבוצה תעלה לכל שלב</p>
+
+<nav class="stage-nav" id="stageNav"></nav>
+
+<div class="stages-container" id="stagesContainer"></div>
+
+<script>
+const TOTAL = 33;
+
+const stages = [
+  {
+    id: 'round32',
+    name: 'שלב ה-32',
+    icon: '32',
+    color: '#3b82f6',
+    topN: 17,
+    teams: [
+      {team:'אוסטריה',votes:33},{team:'אורוגוואי',votes:33},{team:'אנגליה',votes:33},
+      {team:'ארגנטינה',votes:33},{team:'בלגיה',votes:33},{team:'ברזיל',votes:33},
+      {team:'גרמניה',votes:33},{team:'הולנד',votes:33},{team:'חוף השנהב',votes:33},
+      {team:'מקסיקו',votes:33},{team:'מרוקו',votes:33},{team:'ספרד',votes:33},
+      {team:'פורטוגל',votes:33},{team:'צרפת',votes:33},{team:'קולומביה',votes:33},
+      {team:'קרואטיה',votes:33},{team:'שוויץ',votes:33},
+      {team:'ארה״ב',votes:32},{team:'נורווגיה',votes:32},
+      {team:'טורקיה',votes:31},{team:'יפן',votes:31},{team:'מצרים',votes:31},
+      {team:'סנגל',votes:30},{team:'קנדה',votes:30},
+      {team:'אקוודור',votes:29},{team:'דרום קוריאה',votes:29},
+      {team:'סקוטלנד',votes:27},{team:'צ׳כיה',votes:24},{team:'שוודיה',votes:23},
+      {team:'אלג׳יריה',votes:22},{team:'בוסניה',votes:21},{team:'גאנה',votes:20},
+      {team:'פרס',votes:17},{team:'פרגוואי',votes:15},{team:'אוסטרליה',votes:13},
+      {team:'ערב הסעודית',votes:12},{team:'פנמה',votes:6},{team:'טוניסיה',votes:5},
+      {team:'קונגו',votes:4},{team:'דרום אפריקה',votes:3},{team:'אוזבקיסטן',votes:2},
+      {team:'כף ורדה',votes:2},{team:'ניו זילנד',votes:2},{team:'קטר',votes:2}
+    ]
+  },
+  {
+    id: 'round16',
+    name: 'שלב ה-16',
+    icon: '16',
+    color: '#10b981',
+    topN: 12,
+    teams: [
+      {team:'אנגליה',votes:33},{team:'ארגנטינה',votes:33},{team:'גרמניה',votes:33},{team:'פורטוגל',votes:33},
+      {team:'ספרד',votes:32},{team:'צרפת',votes:31},{team:'ארה״ב',votes:30},{team:'בלגיה',votes:30},
+      {team:'מקסיקו',votes:30},{team:'ברזיל',votes:29},{team:'שוויץ',votes:28},
+      {team:'טורקיה',votes:23},{team:'הולנד',votes:22},{team:'נורווגיה',votes:22},
+      {team:'קרואטיה',votes:18},{team:'דרום קוריאה',votes:16},{team:'קנדה',votes:16},
+      {team:'קולומביה',votes:14},{team:'מרוקו',votes:10},{team:'מצרים',votes:8},
+      {team:'סנגל',votes:7},{team:'חוף השנהב',votes:5},{team:'אקוודור',votes:4},
+      {team:'צ׳כיה',votes:4},{team:'אוסטרליה',votes:3},{team:'יפן',votes:3},
+      {team:'שוודיה',votes:3},{team:'בוסניה',votes:2},{team:'פרס',votes:2},
+      {team:'אורוגוואי',votes:1},{team:'אלג׳יריה',votes:1},{team:'גאנה',votes:1},{team:'פרגוואי',votes:1}
+    ]
+  },
+  {
+    id: 'quarterfinal',
+    name: 'רבע גמר',
+    icon: '⚔️',
+    color: '#f59e0b',
+    topN: null,
+    teams: [
+      {team:'ארגנטינה',votes:33},{team:'ספרד',votes:32},{team:'אנגליה',votes:31},
+      {team:'פורטוגל',votes:31},{team:'צרפת',votes:29},{team:'ברזיל',votes:26},
+      {team:'הולנד',votes:21},{team:'בלגיה',votes:16},{team:'ארה״ב',votes:10},
+      {team:'טורקיה',votes:7},{team:'מרוקו',votes:7},{team:'נורווגיה',votes:6},
+      {team:'גרמניה',votes:5},{team:'קרואטיה',votes:3},{team:'שוויץ',votes:3},
+      {team:'יפן',votes:2},{team:'שוודיה',votes:2}
+    ]
+  },
+  {
+    id: 'semifinal',
+    name: 'חצי גמר',
+    icon: '🔥',
+    color: '#ef4444',
+    topN: null,
+    teams: [
+      {team:'ספרד',votes:31},{team:'צרפת',votes:28},{team:'ארגנטינה',votes:20},
+      {team:'אנגליה',votes:19},{team:'ברזיל',votes:13},{team:'פורטוגל',votes:13},
+      {team:'גרמניה',votes:3},{team:'הולנד',votes:2},{team:'בלגיה',votes:1},
+      {team:'נורווגיה',votes:1},{team:'קרואטיה',votes:1}
+    ]
+  },
+  {
+    id: 'third_place',
+    name: 'משחק מקום שלישי',
+    icon: '🥉',
+    color: '#8b5cf6',
+    topN: null,
+    teams: [
+      {team:'ספרד',votes:14},{team:'צרפת',votes:13},{team:'אנגליה',votes:11},
+      {team:'ארגנטינה',votes:10},{team:'פורטוגל',votes:7},{team:'ברזיל',votes:5},
+      {team:'גרמניה',votes:3},{team:'בלגיה',votes:1},{team:'הולנד',votes:1},{team:'קרואטיה',votes:1}
+    ]
+  },
+  {
+    id: 'final',
+    name: 'גמר',
+    icon: '🏆',
+    color: '#f97316',
+    topN: null,
+    teams: [
+      {team:'ספרד',votes:17},{team:'צרפת',votes:15},{team:'ארגנטינה',votes:10},
+      {team:'אנגליה',votes:8},{team:'ברזיל',votes:8},{team:'פורטוגל',votes:6},
+      {team:'הולנד',votes:1},{team:'נורווגיה',votes:1}
+    ]
+  }
+];
+
+function buildNav() {
+  const nav = document.getElementById('stageNav');
+  stages.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.textContent = s.name;
+    btn.style.background = s.color;
+    btn.style.color = '#fff';
+    btn.onclick = () => {
+      document.getElementById('stage-' + s.id).scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    nav.appendChild(btn);
+  });
+}
+
+function makeBar(team, votes, color, maxVotes) {
+  const pct = (votes / maxVotes) * 100;
+  const displayPct = Math.round((votes / TOTAL) * 100);
+
+  const row = document.createElement('div');
+  row.className = 'team-row';
+
+  const nameEl = document.createElement('div');
+  nameEl.className = 'team-name';
+  nameEl.textContent = team;
+  nameEl.title = team;
+
+  const barWrap = document.createElement('div');
+  barWrap.className = 'bar-wrap';
+
+  const barFill = document.createElement('div');
+  barFill.className = 'bar-fill';
+  barFill.style.background = color;
+  barFill.style.opacity = 0.3 + 0.7 * (votes / TOTAL);
+  barFill.style.width = '0%';
+  // Animate in
+  setTimeout(() => { barFill.style.width = pct + '%'; }, 80);
+
+  barWrap.appendChild(barFill);
+
+  const voteLabel = document.createElement('div');
+  voteLabel.className = 'vote-label';
+  voteLabel.style.color = color;
+  voteLabel.textContent = votes + '/' + TOTAL;
+
+  const pctLabel = document.createElement('div');
+  pctLabel.className = 'pct-label';
+  pctLabel.textContent = displayPct + '%';
+
+  row.appendChild(nameEl);
+  row.appendChild(barWrap);
+  row.appendChild(voteLabel);
+  row.appendChild(pctLabel);
+
+  return row;
+}
+
+function buildStages() {
+  const container = document.getElementById('stagesContainer');
+
+  stages.forEach(s => {
+    const section = document.createElement('div');
+    section.className = 'stage-section';
+    section.id = 'stage-' + s.id;
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'stage-header';
+    header.style.background = s.color + '22';
+    header.style.borderBottom = '1px solid ' + s.color + '44';
+
+    const badge = document.createElement('div');
+    badge.className = 'stage-badge';
+    badge.style.background = s.color;
+    badge.textContent = s.icon;
+
+    const titleWrap = document.createElement('div');
+    const title = document.createElement('div');
+    title.className = 'stage-title';
+    title.style.color = s.color;
+    title.textContent = s.name;
+
+    const meta = document.createElement('div');
+    meta.className = 'stage-meta';
+    const uniqueTeams = s.teams.length;
+    meta.textContent = `${uniqueTeams} קבוצות שונות קיבלו הימורים • מתוך ${TOTAL} משתתפים`;
+
+    titleWrap.appendChild(title);
+    titleWrap.appendChild(meta);
+    header.appendChild(badge);
+    header.appendChild(titleWrap);
+
+    section.appendChild(header);
+
+    // Chart area
+    const chartArea = document.createElement('div');
+    chartArea.className = 'chart-area';
+
+    const maxVotes = s.teams[0]?.votes || TOTAL;
+    const topN = s.topN || s.teams.length;
+    const mainTeams = s.teams.slice(0, topN);
+    const extraTeams = s.teams.slice(topN);
+
+    mainTeams.forEach(t => {
+      chartArea.appendChild(makeBar(t.team, t.votes, s.color, maxVotes));
+    });
+
+    if (extraTeams.length > 0) {
+      const divider = document.createElement('div');
+      divider.className = 'divider-row';
+      chartArea.appendChild(divider);
+
+      const collapseBtn = document.createElement('button');
+      collapseBtn.className = 'collapse-btn';
+      collapseBtn.textContent = `▼ הצג עוד ${extraTeams.length} קבוצות עם הימורים בודדים`;
+
+      const extraDiv = document.createElement('div');
+      extraDiv.className = 'hidden-teams';
+      extraTeams.forEach(t => {
+        extraDiv.appendChild(makeBar(t.team, t.votes, s.color, maxVotes));
+      });
+
+      collapseBtn.onclick = () => {
+        const shown = extraDiv.classList.toggle('show');
+        collapseBtn.textContent = shown
+          ? `▲ הסתר קבוצות נוספות`
+          : `▼ הצג עוד ${extraTeams.length} קבוצות עם הימורים בודדים`;
+      };
+
+      chartArea.appendChild(collapseBtn);
+      chartArea.appendChild(extraDiv);
+    }
+
+    section.appendChild(chartArea);
+    container.appendChild(section);
+  });
+}
+
+buildNav();
+buildStages();
+</script>
+</body>
+</html>
