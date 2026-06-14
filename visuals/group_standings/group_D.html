@@ -12,7 +12,7 @@
     background: #0d1117;
     color: #e6edf3;
     min-height: 100vh;
-    padding: 32px 24px;
+    padding: 72px 24px 32px;
     direction: rtl;
   }
 
@@ -113,9 +113,93 @@
     color: #c9d1d9;
     white-space: nowrap;
   }
+
+  .group-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0d1117;
+    padding: 10px 16px;
+    border-bottom: 2px solid #30363d;
+    gap: 8px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  .group-nav-arrow {
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: #21262d;
+    white-space: nowrap;
+    transition: background 0.2s;
+    min-width: 72px;
+    text-align: center;
+    display: inline-block;
+    border: 1px solid #30363d;
+  }
+  .group-nav-arrow:hover { background: #2d333b; color: #79c0ff; }
+  .group-nav-arrow.disabled { visibility: hidden; pointer-events: none; }
+  .group-nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  .group-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .group-tab {
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 11px;
+    border-radius: 8px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .group-tab:hover { background: #2d333b; color: #e6edf3; }
+  .group-tab.active {
+    background: #1f6feb;
+    color: #ffffff;
+    border-color: #1f6feb;
+  }
 </style>
 </head>
 <body>
+<nav class="group-nav">
+  <a href="group_C.html" class="group-nav-arrow">קודם ›</a>
+  <div class="group-nav-center">
+    <div class="group-tabs">
+    <a href="group_A.html" class="group-tab">בית A</a>
+    <a href="group_B.html" class="group-tab">בית B</a>
+    <a href="group_C.html" class="group-tab">בית C</a>
+    <a href="group_D.html" class="group-tab active">בית D</a>
+    <a href="group_E.html" class="group-tab">בית E</a>
+    <a href="group_F.html" class="group-tab">בית F</a>
+    <a href="group_G.html" class="group-tab">בית G</a>
+    <a href="group_H.html" class="group-tab">בית H</a>
+    <a href="group_I.html" class="group-tab">בית I</a>
+    <a href="group_J.html" class="group-tab">בית J</a>
+    <a href="group_K.html" class="group-tab">בית K</a>
+    <a href="group_L.html" class="group-tab">בית L</a>
+    </div>
+  </div>
+  <a href="group_E.html" class="group-nav-arrow">‹ הבא</a>
+</nav>
   <h1>⚽ בית D</h1>
   <p class="subtitle">תחזיות סיום הבית · 34 משתתפים · 10 צירופים שונים</p>
   <div class="cards-wrapper">
