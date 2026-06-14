@@ -2,7 +2,7 @@ import csv
 import os
 import re
 
-with open('match_card_template.html', 'r', encoding='utf-8') as f:
+with open('visuals/templates/match_card_template.html', 'r', encoding='utf-8') as f:
     template = f.read()
 
 with open('World_Cup_Bets.csv', 'r', encoding='utf-8') as f:
@@ -14,7 +14,7 @@ participant_cols = list(range(2, len(header), 2))
 participant_names = [header[i] for i in participant_cols]
 total_participants = len(participant_names)
 
-os.makedirs('cards', exist_ok=True)
+os.makedirs('visuals/cards', exist_ok=True)
 
 current_group = ''
 match_count = 0
@@ -117,11 +117,11 @@ for row in rows[1:]:
         flags=re.DOTALL
     )
 
-    output_path = f'cards/match_{match_num.zfill(2)}.html'
+    output_path = f'visuals/cards/match_{match_num.zfill(2)}.html'
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(html)
 
     match_count += 1
     print(f'  match_{match_num.zfill(2)}.html  {home_team} נגד {away_team}  ({submitted} ניחושים)')
 
-print(f'\nסה"כ נוצרו {match_count} קלפים ב-cards/')
+print(f'\nסה"כ נוצרו {match_count} קלפים ב-visuals/cards/')

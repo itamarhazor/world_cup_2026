@@ -2,7 +2,7 @@ import csv
 from collections import defaultdict
 
 CSV_PATH = "World_Cup_Bets.csv"
-OUT_DIR = "group_standings"
+OUT_DIR = "visuals/group_standings"
 
 GROUPS = {
     "A": (119, 122),

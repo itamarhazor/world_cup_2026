@@ -11,7 +11,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 CSV_PATH = Path(__file__).parent / 'World_Cup_Bets.csv'
-OUTPUT_PATH = Path(__file__).parent / 'predictions_analysis.html'
+OUTPUT_PATH = Path(__file__).parent / 'visuals/analysis/predictions_analysis.html'
 
 AI_ENGINES = {'Gemini', 'Claude', 'Grok', 'ChatGPT'}
 FUN_PARTICIPANTS = {'הקוף', 'המתחכם'}

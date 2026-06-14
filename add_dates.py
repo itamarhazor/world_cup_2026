@@ -37,7 +37,7 @@ with open('/Users/itamarhazor/projects/world_cup_2026/schedule.txt', 'r', encodi
 
 print(f"Parsed {len(schedule)} matches")
 
-cards_dir = '/Users/itamarhazor/projects/world_cup_2026/cards'
+cards_dir = '/Users/itamarhazor/projects/world_cup_2026/visuals/cards'
 updated = skipped = errors = 0
 
 for match_num, (day_he, date_str, time_str) in sorted(schedule.items()):

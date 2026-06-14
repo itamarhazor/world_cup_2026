@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תחזיות משחק</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0f1923;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 64px 24px 24px;
+  }
+
+  .card {
+    background: #1a2632;
+    border-radius: 20px;
+    width: 520px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f, #0d2137);
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid #263a50;
+  }
+  .match-meta {
+    font-size: 11px;
+    color: #4a9eff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .teams {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .team {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .vs {
+    font-size: 13px;
+    color: #4a9eff;
+    font-weight: 600;
+    background: rgba(74,158,255,0.15);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .bet-count {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #7a9bb5;
+  }
+  .bet-count span {
+    color: #4a9eff;
+    font-weight: 600;
+  }
+
+  /* Sections */
+  .section {
+    padding: 20px 24px;
+    border-bottom: 1px solid #263a50;
+  }
+  .section:last-child { border-bottom: none; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4a9eff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* Outcome bar */
+  .outcome-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .outcome-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c8d8e8;
+    width: 90px;
+    flex-shrink: 0;
+  }
+  .outcome-bar-wrap {
+    flex: 1;
+    background: #0f1923;
+    border-radius: 6px;
+    height: 28px;
+    overflow: hidden;
+  }
+  .outcome-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .bar-home { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+  .bar-draw { background: linear-gradient(90deg, #6b7280, #9ca3af); }
+  .bar-away { background: linear-gradient(90deg, #dc2626, #ef4444); }
+
+  .outcome-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: #c8d8e8;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .outcome-num.zero { color: #3a5068; }
+
+  /* Score distribution */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .score-badge {
+    background: #0f1923;
+    border: 1px solid #2a3f55;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    min-width: 64px;
+    text-align: center;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-bar-wrap {
+    flex: 1;
+    background: #0f1923;
+    border-radius: 5px;
+    height: 22px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #0f6b3d, #16a34a);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .score-names {
+    font-size: 11px;
+    color: #7a9bb5;
+    margin-top: 2px;
+    margin-bottom: 6px;
+    padding-right: 76px;
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    background: #131f2a;
+    padding: 10px 24px;
+    text-align: center;
+    font-size: 10px;
+    color: #3a5068;
+    letter-spacing: 0.5px;
+  }
+  .match-date {
+    font-size: 11px;
+    color: #7a9bb5;
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .match-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0d1b2a;
+    padding: 10px 16px;
+    border-bottom: 2px solid #1e3a5f;
+    gap: 8px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  .nav-arrow {
+    color: #4a9eff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: #1e3a5f;
+    white-space: nowrap;
+    transition: background 0.2s;
+    min-width: 72px;
+    text-align: center;
+    display: inline-block;
+  }
+  .nav-arrow:hover { background: #263a50; color: #7bb8ff; }
+  .nav-arrow.disabled { visibility: hidden; pointer-events: none; }
+  .nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  .date-select {
+    background: #1e3a5f;
+    color: #e2e8f0;
+    border: 1px solid #263a50;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    cursor: pointer;
+    max-width: 200px;
+    width: 100%;
+    text-align: center;
+  }
+  .date-select:focus { outline: none; border-color: #4a9eff; }
+  .day-counter {
+    font-size: 11px;
+    color: #7bb8ff;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<nav class="match-nav">
+  <a href="match_42.html" class="nav-arrow">קודם ›</a>
+  <div class="nav-center">
+    <select class="date-select" onchange="location.href=this.value">
+      <option value="match_01.html">יום ה', 11.6</option>
+      <option value="match_02.html">יום ו', 12.6</option>
+      <option value="match_04.html">שבת, 13.6</option>
+      <option value="match_07.html">יום א', 14.6</option>
+      <option value="match_09.html">יום ב', 15.6</option>
+      <option value="match_13.html">יום ג', 16.6</option>
+      <option value="match_18.html">יום ד', 17.6</option>
+      <option value="match_21.html">יום ה', 18.6</option>
+      <option value="match_27.html">יום ו', 19.6</option>
+      <option value="match_30.html">שבת, 20.6</option>
+      <option value="match_34.html">יום א', 21.6</option>
+      <option value="match_37.html">יום ב', 22.6</option>
+      <option value="match_42.html" selected>יום ג', 23.6</option>
+      <option value="match_46.html">יום ד', 24.6</option>
+      <option value="match_49.html">יום ה', 25.6</option>
+      <option value="match_57.html">יום ו', 26.6</option>
+      <option value="match_65.html">שבת, 27.6</option>
+      <option value="match_67.html">יום א', 28.6</option>
+    </select>
+    <div class="day-counter">2 מתוך 5 היום</div>
+  </div>
+  <a href="match_44.html" class="nav-arrow">‹ הבא</a>
+</nav>
+<div class="card">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="match-meta">⚽ בית I &nbsp;·&nbsp; משחק 41</div>
+    <div class="match-date">יום ג', 23.6 &nbsp;&nbsp;|&nbsp;&nbsp; 03:00</div>
+    <!-- e.g. GROUP_LABEL = "בית A", MATCH_LABEL = "משחק 1" -->
+    <div class="teams">
+      <div class="team">נורווגיה</div>
+      <div class="vs">נגד</div>
+      <div class="team">סנגל</div>
+    </div>
+  </div>
+
+  <!-- Outcome distribution -->
+  <!-- Bar widths are percentages relative to the highest outcome count (= 100%) -->
+  <div class="section">
+    <div class="section-title">📊 חלוקת תוצאות</div>
+
+    <div class="outcome-row">
+      <div class="outcome-label">נורווגיה ניצחון</div>
+      <div class="outcome-bar-wrap">
+        <div class="outcome-bar bar-home" style="width:86.7%">13</div>
+      </div>
+      <div class="outcome-num ">13</div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="outcome-label">תיקו</div>
+      <div class="outcome-bar-wrap">
+        <div class="outcome-bar bar-draw" style="width:100.0%">15</div>
+      </div>
+      <div class="outcome-num ">15</div>
+    </div>
+
+    <div class="outcome-row">
+      <div class="outcome-label">סנגל ניצחון</div>
+      <div class="outcome-bar-wrap">
+        <div class="outcome-bar bar-away" style="width:40.0%">6</div>
+      </div>
+      <div class="outcome-num ">6</div>
+    </div>
+  </div>
+
+  <!-- Score distribution -->
+  <!-- Repeat the block below for each unique score, sorted by count desc -->
+  <!-- Bar widths are percentages relative to the most popular score (= 100%) -->
+  <div class="section">
+    <div class="section-title">🎯 ניחושי תוצאה</div>
+
+    <div class="score-row">
+      <div class="score-badge">1 - 1</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:100.0%">12</div>
+      </div>
+    </div>
+    <div class="score-names">אביבה, בןמשה, שלו, אבי, ליחי, אמיתי, אברגל, גיל, יונתן, יאיר, Grok, ChatGPT</div>
+    <div class="score-row">
+      <div class="score-badge">2 - 1</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:58.3%">7</div>
+      </div>
+    </div>
+    <div class="score-names">משה, שלומי, אילן, ניסן, איתמר, אביתר, Claude</div>
+    <div class="score-row">
+      <div class="score-badge">1 - 0</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:33.3%">4</div>
+      </div>
+    </div>
+    <div class="score-names">אלעד, אריה, קדמי, דרור</div>
+    <div class="score-row">
+      <div class="score-badge">1 - 2</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:25.0%">3</div>
+      </div>
+    </div>
+    <div class="score-names">גיא, יוסי, אבישי</div>
+    <div class="score-row">
+      <div class="score-badge">2 - 2</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:25.0%">3</div>
+      </div>
+    </div>
+    <div class="score-names">יואב, ליעד, Gemini</div>
+    <div class="score-row">
+      <div class="score-badge">2 - 3</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:16.7%">2</div>
+      </div>
+    </div>
+    <div class="score-names">עוזיה, אוחיון</div>
+    <div class="score-row">
+      <div class="score-badge">3 - 2</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:8.3%">1</div>
+      </div>
+    </div>
+    <div class="score-names">ברק</div>
+    <div class="score-row">
+      <div class="score-badge">2 - 0</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:8.3%">1</div>
+      </div>
+    </div>
+    <div class="score-names">הקוף</div>
+    <div class="score-row">
+      <div class="score-badge">0 - 1</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:8.3%">1</div>
+      </div>
+    </div>
+    <div class="score-names">המתחכם</div>
+
+  </div>
+
+  <div class="footer">מונדיאל 2026 · ניחושים לפני המשחק</div>
+</div>
+</body>
+</html>
+
+<!--
+=== PLACEHOLDER REFERENCE ===
+
+HEADER
+  בית I       — e.g. "בית A"
+  משחק 41       — e.g. "משחק 1"
+  נורווגיה         — home team name in Hebrew
+  סנגל         — away team name in Hebrew
+  34   — number of participants with a non-empty bet
+  0     — number of participants with no bet (35 - submitted)
+
+OUTCOME SECTION (bars scale to the max of the three counts = 100%)
+  13    — number of bets predicting home win
+  86.7      — (home_win / max_outcome) * 100, rounded to 1 decimal
+       — "zero" if count is 0 (dims the number), else ""
+  (same pattern for DRAW and AWAY_WIN)
+
+SCORE SECTION (bars scale to the most popular score count = 100%)
+  {{SCORE}}             — score string, e.g. "2 – 1"
+  {{SCORE_COUNT}}       — how many predicted this score
+  {{SCORE_PCT}}         — (count / max_score_count) * 100, rounded to 1 decimal
+  {{NAMES_LIST}}        — comma-separated names of people who bet this score
+-->
