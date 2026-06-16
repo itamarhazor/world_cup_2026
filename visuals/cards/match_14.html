@@ -176,6 +176,42 @@
     line-height: 1.4;
   }
 
+  /* WhatsApp section */
+  .whatsapp-section { padding: 16px 24px; }
+  .whatsapp-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0f1923;
+    border: 1px solid #1a3a2a;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .whatsapp-text {
+    flex: 1;
+    font-size: 14px;
+    color: #c8d8e8;
+    line-height: 1.5;
+    direction: rtl;
+    font-weight: 500;
+  }
+  .copy-btn {
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    white-space: nowrap;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover { background: #15803d; }
+  .copy-btn.copied { background: #0f6b3d; }
+
   /* Footer */
   .footer {
     background: #131f2a;
@@ -401,8 +437,28 @@
 
   </div>
 
+  <!-- WhatsApp share text -->
+  <div class="section whatsapp-section">
+    <div class="section-title">📲 טקסט לוואטסאפ</div>
+    <div class="whatsapp-box">
+      <span class="whatsapp-text" id="wa-text">יום ב', 15.6  |  19:00  |  ספרד נגד כף ורדה</span>
+      <button class="copy-btn" onclick="copyWaText()" id="copy-btn">העתק</button>
+    </div>
+  </div>
+
   <div class="footer">מונדיאל 2026 · ניחושים לפני המשחק</div>
 </div>
+<script>
+function copyWaText() {
+  var text = document.getElementById('wa-text').textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copy-btn');
+    btn.textContent = 'הועתק ✓';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'העתק'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
 </body>
 </html>
 

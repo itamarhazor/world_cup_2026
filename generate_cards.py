@@ -186,6 +186,7 @@ for match_num in sorted_nums:
     date_label = meta.get('date_label', '')
     time_str = meta.get('time', '')
     match_date_str = f'{date_label} &nbsp;&nbsp;|&nbsp;&nbsp; {time_str}' if date_label else ''
+    whatsapp_text = f'{date_label}  |  {time_str}  |  {home_team} נגד {away_team}' if date_label else f'{home_team} נגד {away_team}'
 
     nav_html = build_nav(match_num, sorted_nums)
 
@@ -207,6 +208,7 @@ for match_num in sorted_nums:
     html = html.replace('{{AWAY_WIN_COUNT}}', str(away_win))
     html = html.replace('{{AWAY_WIN_PCT}}', str(away_win_pct))
     html = html.replace('{{AWAY_WIN_ZERO}}', 'zero' if away_win == 0 else '')
+    html = html.replace('{{WHATSAPP_TEXT}}', whatsapp_text)
 
     html = re.sub(
         r'    <!-- REPEAT BLOCK START -->.*?    <!-- REPEAT BLOCK END -->',
