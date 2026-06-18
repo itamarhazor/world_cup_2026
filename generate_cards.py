@@ -48,7 +48,7 @@ def build_nav(match_num, sorted_nums):
 
     meta = match_meta.get(match_num, {})
     date_label = meta.get('date_label', '')
-    chrono = [m for _, m in sorted(day_matches.get(date_label, []))]
+    chrono = [m for _, m in sorted(day_matches.get(date_label, []), key=lambda x: time_key(x[0]))]
     day_pos = chrono.index(match_num) + 1 if match_num in chrono else 1
     day_total = len(chrono)
 
@@ -131,6 +131,17 @@ for row in rows[1:]:
 
 sorted_nums = sorted(collected.keys())
 
+# Build chronological order (date+time) for prev/next navigation
+def time_key(t):
+    h, m = t.split(':')
+    return int(h) * 60 + int(m)
+
+chrono_nums = []
+for dl in day_order:
+    for _time, mn in sorted(day_matches[dl], key=lambda x: time_key(x[0])):
+        if mn in collected:
+            chrono_nums.append(mn)
+
 match_count = 0
 for match_num in sorted_nums:
     data = collected[match_num]
@@ -188,7 +199,7 @@ for match_num in sorted_nums:
     match_date_str = f'{date_label} &nbsp;&nbsp;|&nbsp;&nbsp; {time_str}' if date_label else ''
     whatsapp_text = f'{date_label}  |  {time_str}  |  {home_team} נגד {away_team}' if date_label else f'{home_team} נגד {away_team}'
 
-    nav_html = build_nav(match_num, sorted_nums)
+    nav_html = build_nav(match_num, chrono_nums)
 
     html = template
     html = html.replace('{{NAV_BAR}}', nav_html)
