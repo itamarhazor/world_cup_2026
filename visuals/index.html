@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מונדיאל 2026 – בית</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#0a0e1a;
+  color:#e2e8f0;
+  min-height:100vh;
+  padding:36px 16px 72px;
+}
+
+/* ── Header ── */
+.hero{text-align:center;margin-bottom:52px}
+.hero-emoji{font-size:3.2rem;display:block;margin-bottom:12px}
+.hero h1{
+  font-size:2.2rem;font-weight:900;
+  background:linear-gradient(135deg,#fbbf24,#f97316,#ef4444);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:8px;
+}
+.hero p{color:#64748b;font-size:.9rem}
+
+/* ── Section ── */
+.section{max-width:900px;margin:0 auto 52px}
+.section-title{
+  font-size:1.1rem;font-weight:800;
+  color:#94a3b8;letter-spacing:.06em;text-transform:uppercase;
+  border-bottom:1px solid #1e293b;
+  padding-bottom:10px;margin-bottom:22px;
+}
+
+/* ── Cards grid ── */
+.cards-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.card{
+  background:#111827;border-radius:16px;
+  padding:22px 20px;
+  text-decoration:none;color:#e2e8f0;
+  border:1px solid #1e293b;
+  transition:transform .2s, border-color .2s, box-shadow .2s;
+  display:flex;flex-direction:column;gap:8px;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:#334155;
+  box-shadow:0 8px 28px rgba(0,0,0,.5);
+}
+.card-icon{font-size:1.9rem}
+.card-title{font-size:1rem;font-weight:800}
+.card-desc{font-size:.8rem;color:#64748b;line-height:1.5}
+.card-arrow{margin-top:auto;font-size:.8rem;color:#475569}
+
+/* ── Group grid ── */
+.groups-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
+  gap:10px;
+}
+.group-btn{
+  background:#111827;border:1px solid #1e293b;border-radius:12px;
+  padding:14px 8px;text-align:center;
+  text-decoration:none;color:#e2e8f0;
+  font-weight:800;font-size:1rem;
+  transition:all .2s;
+}
+.group-btn:hover{background:#1e293b;border-color:#3b82f6;color:#60a5fa}
+.group-btn span{display:block;font-size:.7rem;font-weight:400;color:#64748b;margin-top:3px}
+
+/* ── Knockout strip ── */
+.ko-strip{display:flex;flex-wrap:wrap;gap:10px}
+.ko-btn{
+  display:flex;align-items:center;gap:9px;
+  background:#111827;border:1px solid #1e293b;border-radius:12px;
+  padding:13px 18px;text-decoration:none;color:#e2e8f0;
+  font-size:.88rem;font-weight:700;
+  transition:all .2s;flex:1;min-width:160px;
+}
+.ko-btn:hover{transform:translateY(-2px);border-color:#334155;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.ko-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ── Footer ── */
+footer{text-align:center;color:#334155;font-size:.78rem;margin-top:60px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-emoji">🏆</span>
+  <h1>מונדיאל 2026 – תחזיות</h1>
+  <p>כל הוויזואלים של הבית שלנו במקום אחד</p>
+</div>
+
+<!-- ── Group Stage ── -->
+<div class="section">
+  <div class="section-title">⚽ שלב הבתים</div>
+
+  <div class="cards-grid" style="margin-bottom:18px">
+    <a class="card" href="cards/match_01.html">
+      <div class="card-icon">🃏</div>
+      <div class="card-title">כרטיסי משחקים</div>
+      <div class="card-desc">72 כרטיסים – תחזיות כל המשתתפים לכל משחק בשלב הבתים</div>
+      <div class="card-arrow">פתח ←</div>
+    </a>
+  </div>
+
+  <div style="font-size:.8rem;color:#64748b;margin-bottom:12px;font-weight:600">סדר בתים לפי בית</div>
+  <div class="groups-grid">
+    <a class="group-btn" href="group_standings/group_A.html">A<span>בית A</span></a>
+    <a class="group-btn" href="group_standings/group_B.html">B<span>בית B</span></a>
+    <a class="group-btn" href="group_standings/group_C.html">C<span>בית C</span></a>
+    <a class="group-btn" href="group_standings/group_D.html">D<span>בית D</span></a>
+    <a class="group-btn" href="group_standings/group_E.html">E<span>בית E</span></a>
+    <a class="group-btn" href="group_standings/group_F.html">F<span>בית F</span></a>
+    <a class="group-btn" href="group_standings/group_G.html">G<span>בית G</span></a>
+    <a class="group-btn" href="group_standings/group_H.html">H<span>בית H</span></a>
+    <a class="group-btn" href="group_standings/group_I.html">I<span>בית I</span></a>
+    <a class="group-btn" href="group_standings/group_J.html">J<span>בית J</span></a>
+    <a class="group-btn" href="group_standings/group_K.html">K<span>בית K</span></a>
+    <a class="group-btn" href="group_standings/group_L.html">L<span>בית L</span></a>
+  </div>
+</div>
+
+<!-- ── Knockout ── -->
+<div class="section">
+  <div class="section-title">🥊 שלבי נוקאאוט</div>
+  <div class="cards-grid" style="margin-bottom:18px">
+    <a class="card" href="knockout/knockout_predictions.html">
+      <div class="card-icon">🏟️</div>
+      <div class="card-title">תחזיות נוקאאוט – סקירה</div>
+      <div class="card-desc">כמה משתתפים ניבאו כל קבוצה בכל שלב – תצוגת בר אינטראקטיבית</div>
+      <div class="card-arrow">פתח ←</div>
+    </a>
+    <a class="card" href="knockout/team_lookup.html">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">חיפוש לפי קבוצה</div>
+      <div class="card-desc">בחר קבוצה ושלב – קבל בדיוק מי ניבא ומי לא</div>
+      <div class="card-arrow">פתח ←</div>
+    </a>
+  </div>
+
+  <div class="ko-strip">
+    <a class="ko-btn" href="knockout/round32.html">
+      <div class="ko-dot" style="background:#3b82f6"></div>שלב ה-32
+    </a>
+    <a class="ko-btn" href="knockout/round16.html">
+      <div class="ko-dot" style="background:#10b981"></div>שלב ה-16
+    </a>
+    <a class="ko-btn" href="knockout/quarterfinal.html">
+      <div class="ko-dot" style="background:#f59e0b"></div>רבע גמר
+    </a>
+    <a class="ko-btn" href="knockout/semifinal.html">
+      <div class="ko-dot" style="background:#ef4444"></div>חצי גמר
+    </a>
+    <a class="ko-btn" href="knockout/third_place.html">
+      <div class="ko-dot" style="background:#cd7f32"></div>מקום שלישי
+    </a>
+    <a class="ko-btn" href="knockout/final.html">
+      <div class="ko-dot" style="background:#a855f7"></div>גמר
+    </a>
+  </div>
+</div>
+
+<footer>מונדיאל 2026 · הבית שלנו</footer>
+
+</body>
+</html>
