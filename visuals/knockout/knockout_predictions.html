@@ -325,6 +325,14 @@ function buildNav() {
     };
     nav.appendChild(btn);
   });
+  const lookupBtn = document.createElement('a');
+  lookupBtn.className = 'nav-btn';
+  lookupBtn.href = 'team_lookup.html';
+  lookupBtn.textContent = '🔍 חיפוש קבוצה';
+  lookupBtn.style.background = '#6366f1';
+  lookupBtn.style.color = '#fff';
+  lookupBtn.style.textDecoration = 'none';
+  nav.appendChild(lookupBtn);
 }
 
 function makeBar(team, votes, color, maxVotes) {
