@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Cup 2026 – סימולציה</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #111;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+  }
+
+  /* ─── CARD SHELL ─── */
+  .card {
+    width: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+  }
+
+  /* ─── HEADER BAND ─── */
+  .card-header {
+    background: linear-gradient(135deg, #0a3d62 0%, #1a5276 50%, #0a3d62 100%);
+    padding: 18px 22px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 3px solid #f39c12;
+    position: relative;
+  }
+  .card-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .card-header .badge {
+    background: #f39c12;
+    color: #0a3d62;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .card-header h1 {
+    color: #fff;
+    font-size: 19px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .card-header .sub {
+    color: #aed6f1;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  /* ─── CARD BODY ─── */
+  .card-body {
+    background: #1a1a2e;
+    padding: 0;
+  }
+
+  /* ─── TABLE ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead tr {
+    background: #162040;
+    color: #7fb3d3;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  thead th {
+    padding: 10px 8px;
+    text-align: center;
+  }
+  thead th:nth-child(2) { text-align: right; padding-right: 12px; }
+
+  tbody tr {
+    border-bottom: 1px solid #252545;
+    transition: background 0.2s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody td {
+    padding: 9px 8px;
+    text-align: center;
+    color: #dce;
+  }
+  tbody td.name-cell {
+    text-align: right;
+    padding-right: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+  }
+
+  /* rank column */
+  .rank-cell {
+    font-weight: 800;
+    font-size: 15px;
+    width: 36px;
+  }
+
+  /* top 3 rows */
+  tr.gold   { background: linear-gradient(90deg, rgba(212,175,55,0.18) 0%, rgba(26,26,46,0) 100%); }
+  tr.silver { background: linear-gradient(90deg, rgba(180,180,190,0.14) 0%, rgba(26,26,46,0) 100%); }
+  tr.bronze { background: linear-gradient(90deg, rgba(180,100,50,0.16) 0%, rgba(26,26,46,0) 100%); }
+
+  .gold   .rank-cell { color: #f1c40f; }
+  .silver .rank-cell { color: #bdc3c7; }
+  .bronze .rank-cell { color: #e67e22; }
+
+  /* points */
+  .pts-before { color: #7f8c9a; font-size: 12px; }
+  .pts-gained { color: #2ecc71; font-weight: 700; font-size: 12px; }
+  .pts-total  { font-weight: 800; font-size: 15px; color: #fff; }
+
+  /* delta arrows */
+  .delta-up   { color: #27ae60; font-weight: 700; font-size: 11px; }
+  .delta-down { color: #e74c3c; font-weight: 700; font-size: 11px; }
+  .delta-same { color: #7f8c9a; font-size: 11px; }
+
+  /* ─── SEPARATOR ROW ─── */
+  tr.sep td {
+    background: #111827;
+    font-size: 10px;
+    color: #4a5568;
+    text-align: center;
+    padding: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ─── MOVERS CARD ─── */
+  .movers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .movers-col {
+    padding: 16px;
+  }
+  .movers-col:first-child {
+    border-left: 1px solid #252545;
+  }
+  .movers-col h3 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+  }
+  .movers-col.climbers h3 { color: #2ecc71; border-color: #2ecc71; }
+  .movers-col.fallers  h3 { color: #e74c3c; border-color: #e74c3c; }
+
+  .mover-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #252545;
+  }
+  .mover-row:last-child { border-bottom: none; }
+  .mover-name { font-size: 14px; font-weight: 700; color: #fff; }
+  .mover-sub  { font-size: 10px; color: #7f8c9a; margin-top: 1px; }
+  .mover-badge {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+  .badge-up   { background: rgba(46,204,113,0.2); color: #2ecc71; }
+  .badge-down { background: rgba(231,76,60,0.2);  color: #e74c3c; }
+
+  /* ─── PODIUM CARD ─── */
+  .podium-wrap {
+    background: #1a1a2e;
+    padding: 24px 16px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .podium-place {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .podium-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    border: 3px solid;
+  }
+  .p1 .podium-avatar { background: rgba(241,196,15,0.25);  border-color: #f1c40f; width:68px; height:68px; font-size:26px; }
+  .p2 .podium-avatar { background: rgba(189,195,199,0.2);  border-color: #bdc3c7; }
+  .p3 .podium-avatar { background: rgba(230,126,34,0.2);   border-color: #e67e22; }
+  .podium-name { font-size: 13px; font-weight: 800; color: #fff; }
+  .podium-pts  { font-size: 11px; color: #aed6f1; }
+  .podium-bar {
+    border-radius: 6px 6px 0 0;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+  }
+  .p1 .podium-bar { height: 80px; background: linear-gradient(180deg, #f39c12, #d4ac0d); width: 100px; }
+  .p2 .podium-bar { height: 55px; background: linear-gradient(180deg, #95a5a6, #7f8c8d); }
+  .p3 .podium-bar { height: 40px; background: linear-gradient(180deg, #e67e22, #ca6f1e); }
+
+  /* ─── FOOTER ─── */
+  .card-footer {
+    background: #0d0d1f;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #252545;
+  }
+  .card-footer .note { font-size: 10px; color: #4a5568; }
+  .card-footer .tag  { font-size: 11px; color: #f39c12; font-weight: 700; }
+
+  .emoji-big { font-size: 22px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     CARD 1 – FULL STANDINGS SIMULATION
+════════════════════════════════════════════ -->
+<div class="card" id="card1">
+  <div class="card-header">
+    <div class="badge">⚽ סימולציה · מונדיאל 2026</div>
+    <h1>📊 דירוג משוחזר — אחרי שלב הבתים</h1>
+    <div class="sub">24 משחקים · סיבוב שלישי · מ49–מ72</div>
+  </div>
+
+  <div class="card-body">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th style="text-align:right;padding-right:12px">שם</th>
+          <th>לפני</th>
+          <th>+נק׳</th>
+          <th>סה״כ</th>
+          <th>שינוי</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- TOP 4 (prize spots) -->
+        <tr class="gold">
+          <td class="rank-cell">1</td>
+          <td class="name-cell">יאיר</td>
+          <td class="pts-before">85</td>
+          <td class="pts-gained">+68</td>
+          <td class="pts-total">153</td>
+          <td class="delta-same">—</td>
+        </tr>
+        <tr class="silver">
+          <td class="rank-cell">2</td>
+          <td class="name-cell">ChatGPT 🤖</td>
+          <td class="pts-before">73</td>
+          <td class="pts-gained">+67</td>
+          <td class="pts-total">140</td>
+          <td class="delta-up">↑9</td>
+        </tr>
+        <tr class="bronze">
+          <td class="rank-cell">3</td>
+          <td class="name-cell">אביתר</td>
+          <td class="pts-before">70</td>
+          <td class="pts-gained">+69</td>
+          <td class="pts-total">139</td>
+          <td class="delta-up">↑13</td>
+        </tr>
+        <tr class="gold">
+          <td class="rank-cell">4</td>
+          <td class="name-cell">Grok 🤖</td>
+          <td class="pts-before">76</td>
+          <td class="pts-gained">+60</td>
+          <td class="pts-total">136</td>
+          <td class="delta-up">↑4</td>
+        </tr>
+
+        <!-- Prize line separator -->
+        <tr><td colspan="6" style="padding:0"><div style="height:3px;background:linear-gradient(90deg,#f39c12,#e67e22,#f39c12);"></div></td></tr>
+        <tr><td colspan="6" style="padding:2px 0;background:#0d0d1f;text-align:center;font-size:10px;color:#f39c12;letter-spacing:1.5px">✦ קו פרסים ✦</td></tr>
+        <tr><td colspan="6" style="padding:0"><div style="height:3px;background:linear-gradient(90deg,#f39c12,#e67e22,#f39c12);"></div></td></tr>
+
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">5</td>
+          <td class="name-cell">שלו</td>
+          <td class="pts-before">78</td>
+          <td class="pts-gained">+57</td>
+          <td class="pts-total">135</td>
+          <td class="delta-same">—</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">6</td>
+          <td class="name-cell">Claude 🤖</td>
+          <td class="pts-before">72</td>
+          <td class="pts-gained">+58</td>
+          <td class="pts-total">130</td>
+          <td class="delta-up">↑7</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">7</td>
+          <td class="name-cell">Gemini 🤖</td>
+          <td class="pts-before">66</td>
+          <td class="pts-gained">+63</td>
+          <td class="pts-total">129</td>
+          <td class="delta-up">↑16</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">8</td>
+          <td class="name-cell">אלעד</td>
+          <td class="pts-before">77</td>
+          <td class="pts-gained">+47</td>
+          <td class="pts-total">124</td>
+          <td class="delta-down">↓2</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">9</td>
+          <td class="name-cell">יוסי</td>
+          <td class="pts-before">83</td>
+          <td class="pts-gained">+40</td>
+          <td class="pts-total">123</td>
+          <td class="delta-down">↓7</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">10</td>
+          <td class="name-cell">אברגל</td>
+          <td class="pts-before">76</td>
+          <td class="pts-gained">+44</td>
+          <td class="pts-total">120</td>
+          <td class="delta-down">↓2</td>
+        </tr>
+
+        <tr class="sep"><td colspan="6">· · · · · · · · · · · · · · ·</td></tr>
+
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">11</td>
+          <td class="name-cell">ליעד</td>
+          <td class="pts-before">69</td>
+          <td class="pts-gained">+50</td>
+          <td class="pts-total">119</td>
+          <td class="delta-up">↑6</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">11</td>
+          <td class="name-cell">קדמי</td>
+          <td class="pts-before">71</td>
+          <td class="pts-gained">+48</td>
+          <td class="pts-total">119</td>
+          <td class="delta-up">↑4</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">13</td>
+          <td class="name-cell">משה</td>
+          <td class="pts-before">81</td>
+          <td class="pts-gained">+36</td>
+          <td class="pts-total">117</td>
+          <td class="delta-down">↓9</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">14</td>
+          <td class="name-cell">אוחיון</td>
+          <td class="pts-before">74</td>
+          <td class="pts-gained">+41</td>
+          <td class="pts-total">115</td>
+          <td class="delta-down">↓4</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">15</td>
+          <td class="name-cell">בןמשה</td>
+          <td class="pts-before">63</td>
+          <td class="pts-gained">+51</td>
+          <td class="pts-total">114</td>
+          <td class="delta-up">↑12</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">16</td>
+          <td class="name-cell">ליחי</td>
+          <td class="pts-before">67</td>
+          <td class="pts-gained">+46</td>
+          <td class="pts-total">113</td>
+          <td class="delta-up">↑4</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">16</td>
+          <td class="name-cell">ברק</td>
+          <td class="pts-before">77</td>
+          <td class="pts-gained">+36</td>
+          <td class="pts-total">113</td>
+          <td class="delta-down">↓10</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">18</td>
+          <td class="name-cell">גיל</td>
+          <td class="pts-before">57</td>
+          <td class="pts-gained">+55</td>
+          <td class="pts-total">112</td>
+          <td class="delta-up">↑14</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">19</td>
+          <td class="name-cell">יונתן</td>
+          <td class="pts-before">67</td>
+          <td class="pts-gained">+44</td>
+          <td class="pts-total">111</td>
+          <td class="delta-up">↑1</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">20</td>
+          <td class="name-cell">אביבה</td>
+          <td class="pts-before">66</td>
+          <td class="pts-gained">+43</td>
+          <td class="pts-total">109</td>
+          <td class="delta-up">↑3</td>
+        </tr>
+
+        <tr class="sep"><td colspan="6">· · · · · · · · · · · · · · ·</td></tr>
+
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">21</td>
+          <td class="name-cell">דרור</td>
+          <td class="pts-before">72</td>
+          <td class="pts-gained">+36</td>
+          <td class="pts-total">108</td>
+          <td class="delta-down">↓8</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">22</td>
+          <td class="name-cell">יואב</td>
+          <td class="pts-before">64</td>
+          <td class="pts-gained">+41</td>
+          <td class="pts-total">105</td>
+          <td class="delta-up">↑4</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">22</td>
+          <td class="name-cell">אבישי</td>
+          <td class="pts-before">69</td>
+          <td class="pts-gained">+36</td>
+          <td class="pts-total">105</td>
+          <td class="delta-down">↓5</td>
+        </tr>
+        <tr style="background:rgba(231,76,60,0.08)">
+          <td class="rank-cell" style="color:#e74c3c">24</td>
+          <td class="name-cell" style="color:#e74c3c">אילן 💥</td>
+          <td class="pts-before">83</td>
+          <td class="pts-gained" style="color:#e74c3c">+21</td>
+          <td class="pts-total" style="color:#e74c3c">104</td>
+          <td class="delta-down" style="font-size:13px">↓22!</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">24</td>
+          <td class="name-cell">איתמר</td>
+          <td class="pts-before">65</td>
+          <td class="pts-gained">+39</td>
+          <td class="pts-total">104</td>
+          <td class="delta-up">↑1</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">26</td>
+          <td class="name-cell">אמיתי</td>
+          <td class="pts-before">73</td>
+          <td class="pts-gained">+29</td>
+          <td class="pts-total">102</td>
+          <td class="delta-down">↓15</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">27</td>
+          <td class="name-cell">אבי</td>
+          <td class="pts-before">60</td>
+          <td class="pts-gained">+41</td>
+          <td class="pts-total">101</td>
+          <td class="delta-up">↑1</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">28</td>
+          <td class="name-cell">ניסן</td>
+          <td class="pts-before">60</td>
+          <td class="pts-gained">+39</td>
+          <td class="pts-total">99</td>
+          <td class="delta-same">—</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">29</td>
+          <td class="name-cell">אריה</td>
+          <td class="pts-before">67</td>
+          <td class="pts-gained">+29</td>
+          <td class="pts-total">96</td>
+          <td class="delta-down">↓9</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">30</td>
+          <td class="name-cell">גיא</td>
+          <td class="pts-before">58</td>
+          <td class="pts-gained">+35</td>
+          <td class="pts-total">93</td>
+          <td class="delta-same">—</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">30</td>
+          <td class="name-cell">עוזיה</td>
+          <td class="pts-before">58</td>
+          <td class="pts-gained">+35</td>
+          <td class="pts-total">93</td>
+          <td class="delta-same">—</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">32</td>
+          <td class="name-cell">המתחכם</td>
+          <td class="pts-before">68</td>
+          <td class="pts-gained">+19</td>
+          <td class="pts-total">87</td>
+          <td class="delta-down">↓13</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">33</td>
+          <td class="name-cell">שלומי</td>
+          <td class="pts-before">49</td>
+          <td class="pts-gained">+31</td>
+          <td class="pts-total">80</td>
+          <td class="delta-up">↑1</td>
+        </tr>
+        <tr>
+          <td class="rank-cell" style="color:#7fb3d3">34</td>
+          <td class="name-cell">הקוף</td>
+          <td class="pts-before">51</td>
+          <td class="pts-gained">+18</td>
+          <td class="pts-total">69</td>
+          <td class="delta-down">↓1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    <span class="note">סימולציה — תוצאות לפי קונצנזוס הניחושים</span>
+    <span class="tag">⚽ מונדיאל 2026</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     CARD 2 – BIGGEST MOVERS
+════════════════════════════════════════════ -->
+<div class="card" id="card2">
+  <div class="card-header">
+    <div class="badge">⚽ מונדיאל 2026 · שינויים צפויים</div>
+    <h1>🚀 הדרמה של הסיבוב השלישי</h1>
+    <div class="sub">מי עולה, מי צונח — לפי הסימולציה</div>
+  </div>
+
+  <div class="card-body">
+    <div class="movers-grid">
+
+      <!-- CLIMBERS -->
+      <div class="movers-col climbers">
+        <h3>🔥 הרקטות</h3>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">Gemini 🤖</div>
+            <div class="mover-sub">23 → 7</div>
+          </div>
+          <div class="mover-badge badge-up">↑16</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">אביתר</div>
+            <div class="mover-sub">16 → 3</div>
+          </div>
+          <div class="mover-badge badge-up">↑13</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">גיל</div>
+            <div class="mover-sub">32 → 18</div>
+          </div>
+          <div class="mover-badge badge-up">↑14</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">בןמשה</div>
+            <div class="mover-sub">27 → 15</div>
+          </div>
+          <div class="mover-badge badge-up">↑12</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">ChatGPT 🤖</div>
+            <div class="mover-sub">11 → 2</div>
+          </div>
+          <div class="mover-badge badge-up">↑9</div>
+        </div>
+      </div>
+
+      <!-- FALLERS -->
+      <div class="movers-col fallers">
+        <h3>💣 הצניחות</h3>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">אילן 💥</div>
+            <div class="mover-sub">2 → 24</div>
+          </div>
+          <div class="mover-badge badge-down">↓22</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">אמיתי</div>
+            <div class="mover-sub">11 → 26</div>
+          </div>
+          <div class="mover-badge badge-down">↓15</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">המתחכם</div>
+            <div class="mover-sub">19 → 32</div>
+          </div>
+          <div class="mover-badge badge-down">↓13</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">ברק</div>
+            <div class="mover-sub">6 → 16</div>
+          </div>
+          <div class="mover-badge badge-down">↓10</div>
+        </div>
+
+        <div class="mover-row">
+          <div>
+            <div class="mover-name">משה</div>
+            <div class="mover-sub">4 → 13</div>
+          </div>
+          <div class="mover-badge badge-down">↓9</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- stat strip -->
+    <div style="background:#111827;padding:12px 16px;border-top:1px solid #252545;display:flex;justify-content:space-around;text-align:center">
+      <div>
+        <div style="font-size:22px;font-weight:900;color:#f1c40f">153</div>
+        <div style="font-size:10px;color:#7f8c9a">נקודות מנהיג</div>
+      </div>
+      <div style="width:1px;background:#252545"></div>
+      <div>
+        <div style="font-size:22px;font-weight:900;color:#2ecc71">+69</div>
+        <div style="font-size:10px;color:#7f8c9a">מקסימום נק׳ בסיבוב</div>
+      </div>
+      <div style="width:1px;background:#252545"></div>
+      <div>
+        <div style="font-size:22px;font-weight:900;color:#e74c3c">+18</div>
+        <div style="font-size:10px;color:#7f8c9a">מינימום נק׳ בסיבוב</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <span class="note">על בסיס קונצנזוס 34 מתחרים · 24 משחקים</span>
+    <span class="tag">⚽ מונדיאל 2026</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     CARD 3 – PODIUM
+════════════════════════════════════════════ -->
+<div class="card" id="card3">
+  <div class="card-header">
+    <div class="badge">⚽ מונדיאל 2026 · סיבוב שלישי</div>
+    <h1>🏆 הפודיום הצפוי</h1>
+    <div class="sub">אחרי 72 משחקי שלב הבתים</div>
+  </div>
+
+  <div class="card-body">
+    <div class="podium-wrap">
+
+      <!-- 2nd -->
+      <div class="podium-place p2">
+        <div class="podium-avatar">🤖</div>
+        <div class="podium-name">ChatGPT</div>
+        <div class="podium-pts">140 נק׳</div>
+        <div class="podium-bar">2</div>
+      </div>
+
+      <!-- 1st -->
+      <div class="podium-place p1">
+        <div class="podium-avatar">👑</div>
+        <div class="podium-name" style="font-size:16px">יאיר</div>
+        <div class="podium-pts" style="font-size:13px">153 נק׳</div>
+        <div class="podium-bar">1</div>
+      </div>
+
+      <!-- 3rd -->
+      <div class="podium-place p3">
+        <div class="podium-avatar">א</div>
+        <div class="podium-name">אביתר</div>
+        <div class="podium-pts">139 נק׳</div>
+        <div class="podium-bar">3</div>
+      </div>
+
+    </div>
+
+    <!-- notable facts -->
+    <div style="padding:16px;display:flex;flex-direction:column;gap:10px;border-top:1px solid #252545">
+      <div style="background:#162040;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">👑</span>
+        <div>
+          <div style="font-size:13px;color:#f1c40f;font-weight:800">יאיר מוביל ב-13 נקודות</div>
+          <div style="font-size:11px;color:#7f8c9a">פער גדול לפני שלב 32 הגדולות</div>
+        </div>
+      </div>
+      <div style="background:#162040;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">🤖</span>
+        <div>
+          <div style="font-size:13px;color:#2ecc71;font-weight:800">3 מהבינה המלאכותית בטופ 7</div>
+          <div style="font-size:11px;color:#7f8c9a">ChatGPT, Grok, Claude ו-Gemini עולים</div>
+        </div>
+      </div>
+      <div style="background:#162040;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px">
+        <span style="font-size:26px">💥</span>
+        <div>
+          <div style="font-size:13px;color:#e74c3c;font-weight:800">אילן צונח מ-2 ל-24!</div>
+          <div style="font-size:11px;color:#7f8c9a">הניחושים שלו מתנגשים עם הקונצנזוס</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <span class="note">* סימולציה — לא תוצאות סופיות</span>
+    <span class="tag">⚽ מונדיאל 2026</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -83,6 +83,12 @@
     text-transform: uppercase;
     margin-bottom: 14px;
   }
+  .section-subtitle {
+    font-size: 11px;
+    color: #4a7a9b;
+    margin-top: -10px;
+    margin-bottom: 14px;
+  }
 
   /* Outcome bar */
   .outcome-row {
@@ -175,6 +181,42 @@
     padding-right: 76px;
     line-height: 1.4;
   }
+
+  /* Matchup prediction chips */
+  .matchup-summary {
+    font-size: 13px;
+    color: #7a9bb5;
+    margin-bottom: 10px;
+  }
+  .matchup-summary strong {
+    color: #4ade80;
+    font-weight: 700;
+  }
+  .name-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .name-chip {
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .name-chip.hit {
+    background: #162a1e;
+    border: 1px solid #16a34a;
+    color: #4ade80;
+  }
+  .name-chip.miss {
+    background: #151e28;
+    border: 1px solid #263a50;
+    color: #4a7a9b;
+  }
+
+  /* Score names with hit/miss coloring */
+  .score-names .sn-hit { color: #4ade80; font-weight: 600; }
+  .score-names .sn-miss { color: #7a9bb5; }
 
   /* WhatsApp section */
   .whatsapp-section { padding: 16px 24px; }
@@ -289,158 +331,127 @@
 </head>
 <body>
 <nav class="match-nav">
-  <a href="match_53.html" class="nav-arrow">קודם ›</a>
+  <a href="match_81.html" class="nav-arrow">קודם ›</a>
   <div class="nav-center">
     <select class="date-select" onchange="location.href=this.value">
-      <option value="match_01.html">יום ה', 11.6</option>
-      <option value="match_03.html">יום ו', 12.6</option>
-      <option value="match_08.html">שבת, 13.6</option>
-      <option value="match_07.html">יום א', 14.6</option>
-      <option value="match_14.html">יום ב', 15.6</option>
-      <option value="match_13.html">יום ג', 16.6</option>
-      <option value="match_18.html">יום ד', 17.6</option>
-      <option value="match_25.html">יום ה', 18.6</option>
-      <option value="match_27.html">יום ו', 19.6</option>
-      <option value="match_30.html">שבת, 20.6</option>
-      <option value="match_38.html">יום א', 21.6</option>
-      <option value="match_37.html">יום ב', 22.6</option>
-      <option value="match_42.html">יום ג', 23.6</option>
-      <option value="match_51.html">יום ד', 24.6</option>
-      <option value="match_49.html" selected>יום ה', 25.6</option>
-      <option value="match_61.html">יום ו', 26.6</option>
-      <option value="match_65.html">שבת, 27.6</option>
-      <option value="match_67.html">יום א', 28.6</option>
+      <option value="match_73.html">יום א', 28.6</option>
+      <option value="match_76.html">יום ב', 29.6</option>
+      <option value="match_78.html">יום ג', 30.6</option>
+      <option value="match_77.html">יום ד', 1.7</option>
+      <option value="match_84.html" selected>יום ה', 2.7</option>
+      <option value="match_88.html">יום ו', 3.7</option>
+      <option value="match_86.html">שבת, 4.7</option>
     </select>
-    <div class="day-counter">4 מתוך 6 היום</div>
+    <div class="day-counter">2 מתוך 2 היום</div>
   </div>
-  <a href="match_55.html" class="nav-arrow">‹ הבא</a>
+  <a href="match_83.html" class="nav-arrow">‹ הבא</a>
 </nav>
 <div class="card">
 
   <!-- Header -->
   <div class="header">
-    <div class="match-meta">⚽ בית A &nbsp;·&nbsp; משחק 54</div>
-    <div class="match-date">יום ה', 25.6 &nbsp;&nbsp;|&nbsp;&nbsp; 4:00</div>
+    <div class="match-meta">⚽ שלב ה-32 &nbsp;·&nbsp; משחק 84</div>
+    <div class="match-date">יום ה', 2.7 &nbsp;&nbsp;|&nbsp;&nbsp; 22:00</div>
     <div class="teams">
-      <div class="team">דרום אפריקה</div>
+      <div class="team">ספרד</div>
       <div class="vs">נגד</div>
-      <div class="team">דרום קוריאה</div>
+      <div class="team">אוסטריה</div>
     </div>
+    <div class="bet-count"><span>30</span> מתוך <span>34</span> ניחשו נכון את הזוג</div>
   </div>
 
-  <!-- Outcome distribution -->
+  <!-- Outcome distribution (from correct-matchup bets only) -->
   <!-- Bar widths are percentages relative to the highest outcome count (= 100%) -->
   <div class="section">
     <div class="section-title">📊 חלוקת תוצאות</div>
 
     <div class="outcome-row">
-      <div class="outcome-label">דרום אפריקה ניצחון</div>
+      <div class="outcome-label">ספרד ניצחון</div>
       <div class="outcome-bar-wrap">
-        <div class="outcome-bar bar-home" style="width:3.6%">1</div>
+        <div class="outcome-bar bar-home" style="width:100.0%">32</div>
       </div>
-      <div class="outcome-num ">1</div>
+      <div class="outcome-num ">32</div>
     </div>
 
     <div class="outcome-row">
       <div class="outcome-label">תיקו</div>
       <div class="outcome-bar-wrap">
-        <div class="outcome-bar bar-draw" style="width:17.9%">5</div>
+        <div class="outcome-bar bar-draw" style="width:3.1%">1</div>
       </div>
-      <div class="outcome-num ">5</div>
+      <div class="outcome-num ">1</div>
     </div>
 
     <div class="outcome-row">
-      <div class="outcome-label">דרום קוריאה ניצחון</div>
+      <div class="outcome-label">אוסטריה ניצחון</div>
       <div class="outcome-bar-wrap">
-        <div class="outcome-bar bar-away" style="width:100.0%">28</div>
+        <div class="outcome-bar bar-away" style="width:3.1%">1</div>
       </div>
-      <div class="outcome-num ">28</div>
+      <div class="outcome-num ">1</div>
     </div>
   </div>
 
-  <!-- Score distribution -->
+  <!-- Score distribution (from correct-matchup bets only) -->
   <!-- Repeat the block below for each unique score, sorted by count desc -->
   <!-- Bar widths are percentages relative to the most popular score (= 100%) -->
   <div class="section">
     <div class="section-title">🎯 ניחושי תוצאה</div>
 
     <div class="score-row">
-      <div class="score-badge">0 - 2</div>
+      <div class="score-badge">3 - 1</div>
       <div class="score-bar-wrap">
-        <div class="score-bar" style="width:100.0%">10</div>
+        <div class="score-bar" style="width:100.0%">12</div>
       </div>
     </div>
-    <div class="score-names">יואב, שלו, אבי, אבישי, גיל, יאיר, Gemini, Claude, Grok, ChatGPT</div>
-    <div class="score-row">
-      <div class="score-badge">1 - 2</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:60.0%">6</div>
-      </div>
-    </div>
-    <div class="score-names">בןמשה, ליחי, אמיתי, אילן, יונתן, אביתר</div>
-    <div class="score-row">
-      <div class="score-badge">0 - 3</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:40.0%">4</div>
-      </div>
-    </div>
-    <div class="score-names">גיא, ליעד, עוזיה, איתמר</div>
-    <div class="score-row">
-      <div class="score-badge">0 - 1</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:40.0%">4</div>
-      </div>
-    </div>
-    <div class="score-names">אלעד, אברגל, אוחיון, המתחכם</div>
-    <div class="score-row">
-      <div class="score-badge">0 - 0</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:20.0%">2</div>
-      </div>
-    </div>
-    <div class="score-names">קדמי, הקוף</div>
-    <div class="score-row">
-      <div class="score-badge">2 - 2</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:20.0%">2</div>
-      </div>
-    </div>
-    <div class="score-names">שלומי, ניסן</div>
-    <div class="score-row">
-      <div class="score-badge">1 - 4</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:20.0%">2</div>
-      </div>
-    </div>
-    <div class="score-names">ברק, דרור</div>
-    <div class="score-row">
-      <div class="score-badge">2 - 3</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:10.0%">1</div>
-      </div>
-    </div>
-    <div class="score-names">אביבה</div>
-    <div class="score-row">
-      <div class="score-badge">1 - 1</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:10.0%">1</div>
-      </div>
-    </div>
-    <div class="score-names">אריה</div>
+    <div class="score-names"><span class="sn-hit">יואב</span>, <span class="sn-hit">ליעד</span>, <span class="sn-hit">אלעד</span>, <span class="sn-hit">אביבה</span>, <span class="sn-hit">עוזיה</span>, <span class="sn-hit">משה</span>, <span class="sn-hit">אבי</span>, <span class="sn-hit">ליחי</span>, <span class="sn-hit">קדמי</span>, <span class="sn-hit">שלומי</span>, <span class="sn-hit">אמיתי</span>, <span class="sn-hit">Grok</span></div>
     <div class="score-row">
       <div class="score-badge">2 - 0</div>
       <div class="score-bar-wrap">
-        <div class="score-bar" style="width:10.0%">1</div>
+        <div class="score-bar" style="width:66.7%">8</div>
       </div>
     </div>
-    <div class="score-names">משה</div>
+    <div class="score-names"><span class="sn-hit">אריה</span>, <span class="sn-hit">יוסי</span>, <span class="sn-hit">אבישי</span>, <span class="sn-hit">גיל</span>, <span class="sn-hit">יאיר</span>, <span class="sn-hit">איתמר</span>, <span class="sn-hit">Gemini</span>, <span class="sn-hit">ChatGPT</span></div>
     <div class="score-row">
-      <div class="score-badge">1 - 11</div>
+      <div class="score-badge">2 - 1</div>
       <div class="score-bar-wrap">
-        <div class="score-bar" style="width:10.0%">1</div>
+        <div class="score-bar" style="width:33.3%">4</div>
       </div>
     </div>
-    <div class="score-names">יוסי</div>
+    <div class="score-names"><span class="sn-hit">גיא</span>, <span class="sn-hit">בןמשה</span>, <span class="sn-miss">ברק</span>, <span class="sn-hit">Claude</span></div>
+    <div class="score-row">
+      <div class="score-badge">3 - 0</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:33.3%">4</div>
+      </div>
+    </div>
+    <div class="score-names"><span class="sn-hit">שלו</span>, <span class="sn-hit">אילן</span>, <span class="sn-miss">יונתן</span>, <span class="sn-hit">אביתר</span></div>
+    <div class="score-row">
+      <div class="score-badge">1 - 0</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:25.0%">3</div>
+      </div>
+    </div>
+    <div class="score-names"><span class="sn-hit">ניסן</span>, <span class="sn-hit">דרור</span>, <span class="sn-hit">המתחכם</span></div>
+    <div class="score-row">
+      <div class="score-badge">1 - 1</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:8.3%">1</div>
+      </div>
+    </div>
+    <div class="score-names"><span class="sn-hit">אברגל</span></div>
+    <div class="score-row">
+      <div class="score-badge">5 - 0</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:8.3%">1</div>
+      </div>
+    </div>
+    <div class="score-names"><span class="sn-miss">אוחיון</span></div>
+    <div class="score-row">
+      <div class="score-badge">1 - 3</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:8.3%">1</div>
+      </div>
+    </div>
+    <div class="score-names"><span class="sn-miss">הקוף</span></div>
 
   </div>
 
@@ -448,7 +459,7 @@
   <div class="section whatsapp-section">
     <div class="section-title">📲 טקסט לוואטסאפ</div>
     <div class="whatsapp-box">
-      <span class="whatsapp-text" id="wa-text">יום ה', 25.6  |  4:00  |  דרום אפריקה נגד דרום קוריאה</span>
+      <span class="whatsapp-text" id="wa-text">יום ה', 2.7  |  22:00  |  ספרד נגד אוסטריה</span>
       <button class="copy-btn" onclick="copyWaText()" id="copy-btn">העתק</button>
     </div>
   </div>
@@ -468,27 +479,3 @@ function copyWaText() {
 </script>
 </body>
 </html>
-
-<!--
-=== PLACEHOLDER REFERENCE ===
-
-HEADER
-  בית A       — e.g. "בית A"
-  משחק 54       — e.g. "משחק 1"
-  דרום אפריקה         — home team name in Hebrew
-  דרום קוריאה         — away team name in Hebrew
-  34   — number of participants with a non-empty bet
-  0     — number of participants with no bet (35 - submitted)
-
-OUTCOME SECTION (bars scale to the max of the three counts = 100%)
-  1    — number of bets predicting home win
-  3.6      — (home_win / max_outcome) * 100, rounded to 1 decimal
-       — "zero" if count is 0 (dims the number), else ""
-  (same pattern for DRAW and AWAY_WIN)
-
-SCORE SECTION (bars scale to the most popular score count = 100%)
-  {{SCORE}}             — score string, e.g. "2 – 1"
-  {{SCORE_COUNT}}       — how many predicted this score
-  {{SCORE_PCT}}         — (count / max_score_count) * 100, rounded to 1 decimal
-  {{NAMES_LIST}}        — comma-separated names of people who bet this score
--->
