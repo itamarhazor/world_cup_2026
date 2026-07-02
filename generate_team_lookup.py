@@ -19,7 +19,7 @@ for i in range(2, len(header), 2):
 
 SECTIONS = [
     ('🔵 בונוס – קבוצות בשלב ה-32',          'round32',      'שלב ה-32'),
-    ('🟢 בונוס – קבוצות בשלב ה-16',          'round16',      'שלב ה-16'),
+    ('🟢 בונוס – קבוצות בשמינית גמר',          'round16',      'שמינית גמר'),
     ('🟡 בונוס – קבוצות ברבע גמר',           'quarterfinal', 'רבע גמר'),
     ('🔴 בונוס – קבוצות בחצי גמר',           'semifinal',    'חצי גמר'),
     ('🥉 בונוס – קבוצות במשחק על המקום השלישי', 'thirdplace',   'מקום שלישי'),
@@ -125,7 +125,7 @@ nav{{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:32
 <nav>
   <a class="nav-btn" href="knockout_predictions.html">תחזיות כלליות</a>
   <a class="nav-btn" href="round32.html">שלב ה-32</a>
-  <a class="nav-btn" href="round16.html">שלב ה-16</a>
+  <a class="nav-btn" href="round16.html">שמינית גמר</a>
   <a class="nav-btn" href="quarterfinal.html">רבע גמר</a>
   <a class="nav-btn" href="semifinal.html">חצי גמר</a>
   <a class="nav-btn" href="final.html">גמר</a>
