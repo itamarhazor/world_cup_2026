@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Cup 2026 – חיזויי חצי-גמר</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0d0d;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 10px 12px;
+    color: #fff;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .page-badge {
+    display: inline-block;
+    background: #f39c12;
+    color: #0a0a0a;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .page-title {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .final-four-pills {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .ff-pill {
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 11px;
+  }
+
+  /* ─── GRID ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 6px;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    font-weight: 800;
+    color: #d1d5db;
+    letter-spacing: 0.5px;
+    padding: 6px 10px;
+    margin-top: 8px;
+    background: #161625;
+    border-radius: 8px;
+  }
+
+  /* ─── GROUP CARD ─── */
+  .group-card {
+    background: #1a1a2e;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    padding: 7px 9px 7px;
+  }
+
+  /* ─── POSITIONS GRID ─── */
+  .positions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .position-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .place-label {
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  /* ─── TEAM PILL ─── */
+  .team-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    border-radius: 6px;
+    padding: 4px 3px 3px;
+    width: 100%;
+    min-height: 42px;
+    font-weight: 700;
+  }
+  .team-pill .flag { font-size: 15px; line-height: 1; }
+  .team-pill .team-name { font-size: 10px; text-align: center; line-height: 1.2; }
+
+  /* ─── NAMES ROW ─── */
+  .names-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    border-top: 1px solid #2d2d4a;
+    padding-top: 5px;
+    margin-top: 6px;
+  }
+  .name-chip {
+    background: #2d3748;
+    color: #e2e8f0;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 20px;
+    border: 1px solid #4a5568;
+  }
+  .ai-chip {
+    background: #1e3a5f;
+    color: #93c5fd;
+    border-color: #2563eb;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-badge">חצי-גמר • World Cup 2026</div>
+  <h1 class="page-title">חיזויי הגמר — כל הקומבינציות</h1>
+  <div class="final-four-pills">
+    <span class="ff-pill" style="background:#1a3a8f;color:#fff">🇫🇷 צרפת</span>
+    <span class="ff-pill" style="background:#c0392b;color:#fff">🇪🇸 ספרד</span>
+    <span class="ff-pill" style="background:#8b0000;color:#fff">🏴󠁧󠁢󠁥󠁮󠁧󠁿 אנגליה</span>
+    <span class="ff-pill" style="background:#0a7abf;color:#fff">🇦🇷 ארגנטינה</span>
+  </div>
+</div>
+
+<div class="grid">
+
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">שלומי</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">שלו</span><span class="name-chip">המתחכם</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אברגל</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אוחיון</span><span class="name-chip">דרור</span><span class="name-chip">איתמר</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">גיא</span><span class="name-chip">יונתן</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אלעד</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">קדמי</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אמיתי</span></div>
+  </div>
+
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">משה</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip ai-chip">Claude</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">יואב</span><span class="name-chip">אביבה</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip ai-chip">Gemini</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אביתר</span><span class="name-chip ai-chip">ChatGPT</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">עוזיה</span><span class="name-chip">אבישי</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">בןמשה</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אריה</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">ליעד</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip ai-chip">Grok</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">ברק</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">יוסי</span><span class="name-chip">יאיר</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">ניסן</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#1a3a8f;color:#ffffff;opacity:1">
+          <span class="flag">🇫🇷</span><span class="team-name">צרפת</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אבי</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#0a7abf;color:#ffffff;opacity:1">
+          <span class="flag">🇦🇷</span><span class="team-name">ארגנטינה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">גיל</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">ליחי</span></div>
+  </div>
+  <div class="group-card" style="border-top:3px solid #3a3a5c">
+    <div class="positions-grid">
+      <div class="position-slot">
+        <div class="place-label">🥇</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥈</div>
+        <div class="team-pill" style="background:#991b1b;color:#fca5a5;opacity:0.4">
+          <span class="flag">❌</span><span class="team-name">הודחה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">🥉</div>
+        <div class="team-pill" style="background:#8b0000;color:#ffffff;opacity:1">
+          <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="team-name">אנגליה</span>
+        </div>
+      </div>
+      <div class="position-slot">
+        <div class="place-label">4️⃣</div>
+        <div class="team-pill" style="background:#c0392b;color:#ffffff;opacity:1">
+          <span class="flag">🇪🇸</span><span class="team-name">ספרד</span>
+        </div>
+      </div>
+    </div>
+    <div class="names-row"><span class="name-chip">אילן</span></div>
+  </div>
+
+</div>
+
+</body>
+</html>
